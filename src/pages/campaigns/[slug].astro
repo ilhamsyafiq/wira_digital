@@ -17,12 +17,12 @@ const campaign = getCampaign(slug!)!;
 const featured = campaign.featuredCreators.map((s) => getCreator(s)).filter(Boolean);
 
 const covers: Record<string, string> = {
-  sunset: 'linear-gradient(135deg,#f59e0b,#db2777)',
-  rose: 'linear-gradient(135deg,#fb7185,#be185d)',
-  ocean: 'linear-gradient(135deg,#22d3ee,#0369a1)',
-  aurora: 'linear-gradient(135deg,#34d3a1,#8b5cf6)',
-  lime: 'linear-gradient(135deg,#a3e635,#059669)',
-  violet: 'linear-gradient(135deg,#a78bfa,#6d28d9)',
+  sunset: 'linear-gradient(135deg,#2f5bff,#38a4e0)',
+  rose: 'linear-gradient(135deg,#38a4e0,#1c3596)',
+  ocean: 'linear-gradient(135deg,#2f5bff,#1c2f76)',
+  aurora: 'linear-gradient(135deg,#5c82ff,#38a4e0)',
+  lime: 'linear-gradient(135deg,#38a4e0,#2f5bff)',
+  violet: 'linear-gradient(135deg,#1f47e6,#6bc0ee)',
 };
 const statusMap = {
   active: { label: 'Active', cls: 'text-rise', dot: 'bg-rise' },

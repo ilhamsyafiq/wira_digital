@@ -2,37 +2,39 @@
 
 /* ============================================================
    WIRADIGITAL — Design System (Tailwind v4 CSS-first theme)
-   Premium, data-driven, dark creator-analytics aesthetic.
+   Brand: Digital Blue (#2F5BFF) + Sky Blue (#38A4E0) on navy.
+   Typography: Inter. Premium, data-driven creator-analytics look.
    ============================================================ */
 @theme {
-  /* Brand — teal/cyan core with a restrained violet secondary */
-  --color-brand-50: #ecfdf7;
-  --color-brand-100: #d1fae9;
-  --color-brand-200: #a7f3d5;
-  --color-brand-300: #6ee7bd;
-  --color-brand-400: #34d3a1;
-  --color-brand-500: #14b892;
-  --color-brand-600: #0b9678;
-  --color-brand-700: #0c7862;
-  --color-brand-800: #0f5f50;
-  --color-brand-900: #0f4e43;
+  /* Brand — Digital Blue core scale */
+  --color-brand-50: #eef3ff;
+  --color-brand-100: #dbe4ff;
+  --color-brand-200: #bcceff;
+  --color-brand-300: #93adff;
+  --color-brand-400: #5c82ff;
+  --color-brand-500: #2f5bff; /* Digital Blue — Primary */
+  --color-brand-600: #1f47e6;
+  --color-brand-700: #1b3ac0;
+  --color-brand-800: #1c3596;
+  --color-brand-900: #1c2f76;
 
-  --color-violet-accent: #8b5cf6;
-  --color-violet-soft: #a78bfa;
+  /* Secondary — Sky Blue */
+  --color-sky-accent: #38a4e0; /* Sky Blue — Secondary */
+  --color-sky-soft: #6bc0ee;
 
-  /* Surfaces */
-  --color-ink: #070810;
-  --color-base: #0a0b12;
-  --color-surface: #10121b;
-  --color-surface-2: #161925;
-  --color-surface-3: #1d2130;
+  /* Surfaces — navy-tinted darks (matches Navy Blue brand cards) */
+  --color-ink: #05070f;
+  --color-base: #080c18;
+  --color-surface: #0f1526;
+  --color-surface-2: #151d33;
+  --color-surface-3: #1d2743;
   --color-line: rgba(255, 255, 255, 0.08);
-  --color-line-strong: rgba(255, 255, 255, 0.14);
+  --color-line-strong: rgba(147, 173, 255, 0.22);
 
   /* Text */
-  --color-fg: #f4f6fb;
-  --color-fg-muted: #9aa3b6;
-  --color-fg-subtle: #6b7488;
+  --color-fg: #f3f6fc;
+  --color-fg-muted: #98a4c0;
+  --color-fg-subtle: #6a7492;
 
   /* Signals */
   --color-rise: #34d399;
@@ -40,9 +42,9 @@
   --color-stable: #94a3b8;
   --color-gold: #fbbf24;
 
-  /* Typography */
+  /* Typography — Inter per brand guide */
   --font-sans: 'Inter', ui-sans-serif, system-ui, -apple-system, sans-serif;
-  --font-display: 'Sora', 'Inter', ui-sans-serif, system-ui, sans-serif;
+  --font-display: 'Inter', ui-sans-serif, system-ui, sans-serif;
 
   /* Radius */
   --radius-xl: 1.25rem;
@@ -66,20 +68,20 @@ body {
   overflow-x: hidden;
 }
 
-/* Ambient background glow — subtle, performant, fixed */
+/* Ambient background glow — Digital Blue + Sky Blue, subtle & fixed */
 body::before {
   content: '';
   position: fixed;
   inset: 0;
   z-index: -1;
   background:
-    radial-gradient(60rem 40rem at 80% -10%, rgba(20, 184, 146, 0.10), transparent 60%),
-    radial-gradient(50rem 40rem at 0% 10%, rgba(139, 92, 246, 0.08), transparent 55%);
+    radial-gradient(60rem 40rem at 80% -10%, rgba(47, 91, 255, 0.14), transparent 60%),
+    radial-gradient(50rem 40rem at 0% 10%, rgba(56, 164, 224, 0.10), transparent 55%);
   pointer-events: none;
 }
 
 ::selection {
-  background: color-mix(in srgb, var(--color-brand-500) 40%, transparent);
+  background: color-mix(in srgb, var(--color-brand-500) 45%, transparent);
   color: #fff;
 }
 
@@ -87,7 +89,7 @@ body::before {
 ::-webkit-scrollbar { width: 10px; height: 10px; }
 ::-webkit-scrollbar-track { background: var(--color-ink); }
 ::-webkit-scrollbar-thumb { background: var(--color-surface-3); border-radius: 99px; border: 2px solid var(--color-ink); }
-::-webkit-scrollbar-thumb:hover { background: #2b3145; }
+::-webkit-scrollbar-thumb:hover { background: #2a3a63; }
 
 /* ---- Reusable component classes ---- */
 @layer components {
@@ -129,11 +131,11 @@ body::before {
   .btn:active { transform: translateY(1px); }
 
   .btn-primary {
-    background: linear-gradient(180deg, var(--color-brand-400), var(--color-brand-600));
-    color: #04120e;
-    box-shadow: 0 10px 30px -12px rgba(20, 184, 146, 0.7);
+    background: linear-gradient(180deg, var(--color-brand-500), var(--color-brand-600));
+    color: #ffffff;
+    box-shadow: 0 10px 30px -12px rgba(47, 91, 255, 0.75);
   }
-  .btn-primary:hover { box-shadow: 0 14px 36px -12px rgba(20, 184, 146, 0.9); transform: translateY(-2px); }
+  .btn-primary:hover { box-shadow: 0 14px 36px -12px rgba(47, 91, 255, 0.95); transform: translateY(-2px); }
 
   .btn-ghost {
     background: rgba(255, 255, 255, 0.04);
@@ -185,13 +187,13 @@ body::before {
 
 @layer utilities {
   .text-gradient {
-    background: linear-gradient(120deg, #fff 20%, var(--color-brand-300) 60%, var(--color-violet-soft));
+    background: linear-gradient(120deg, #fff 18%, var(--color-sky-soft) 55%, var(--color-brand-400));
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
   }
   .text-brand-gradient {
-    background: linear-gradient(120deg, var(--color-brand-300), var(--color-brand-500));
+    background: linear-gradient(120deg, var(--color-sky-accent), var(--color-brand-500));
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;

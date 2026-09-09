@@ -8,15 +8,16 @@ export interface Props {
 const { initials, seed, size = 48, class: className = '' } = Astro.props;
 
 // Deterministic gradient from the seed string — stable across renders.
+// Blue-family palettes (on-brand), varied in tone so avatars stay distinct.
 const palettes = [
-  ['#14b892', '#0b9678'],
-  ['#8b5cf6', '#6d28d9'],
-  ['#f472b6', '#be185d'],
-  ['#38bdf8', '#0369a1'],
-  ['#fbbf24', '#d97706'],
-  ['#34d399', '#059669'],
-  ['#a78bfa', '#7c3aed'],
-  ['#fb7185', '#e11d48'],
+  ['#2f5bff', '#1c3596'],
+  ['#38a4e0', '#1f47e6'],
+  ['#5c82ff', '#1b3ac0'],
+  ['#6bc0ee', '#2f5bff'],
+  ['#93adff', '#1f47e6'],
+  ['#38a4e0', '#1c2f76'],
+  ['#4f7bff', '#0f1526'],
+  ['#8ec7f0', '#1c3596'],
 ];
 let h = 0;
 for (let i = 0; i < seed.length; i++) h = (h * 31 + seed.charCodeAt(i)) >>> 0;
