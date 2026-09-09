@@ -1,0 +1,78 @@
+---
+import type { Creator } from '../data/types';
+import { platformMap } from '../data/platforms';
+import Avatar from './Avatar.astro';
+import PlatformIcon from './PlatformIcon.astro';
+import TrendIndicator from './TrendIndicator.astro';
+import { withBase } from '../lib/url';
+
+export interface Props {
+  creator: Creator;
+  showRank?: boolean;
+}
+const { creator, showRank = true } = Astro.props;
+const top = platformMap[creator.topPlatform];
+---
+
+<a
+  href={withBase(`/creators/${creator.slug}`)}
+  class="card card-hover group relative flex flex-col p-5"
+  data-reveal
+>
+  <div class="flex items-start justify-between">
+    <div class="flex items-center gap-3.5">
+      <div class="relative">
+        <Avatar initials={creator.avatar} seed={creator.slug} size={54} />
+        {
+          showRank && (
+            <span class="absolute -bottom-1.5 -right-1.5 grid h-6 min-w-6 place-items-center rounded-full border border-line bg-surface-2 px-1 font-display text-xs font-700 tabular-nums text-fg">
+              {creator.rank}
+            </span>
+          )
+        }
+      </div>
+      <div class="min-w-0">
+        <div class="flex items-center gap-1.5">
+          <span class="truncate font-600 text-fg">{creator.name}</span>
+          {
+            creator.verified && (
+              <svg class="h-4 w-4 shrink-0 text-brand-400" viewBox="0 0 24 24" fill="currentColor" aria-label="Verified">
+                <path d="M12 1.5l2.4 1.9 3-.3 1.2 2.8 2.7 1.4-.6 3 .6 3-2.7 1.4-1.2 2.8-3-.3L12 22.5l-2.4-1.9-3 .3-1.2-2.8-2.7-1.4.6-3-.6-3 2.7-1.4L6.6 3.1l3 .3L12 1.5Zm-1.1 13.2l5-5-1.3-1.3-3.7 3.7-1.8-1.8-1.3 1.3 3.1 3.1Z" />
+              </svg>
+            )
+          }
+        </div>
+        <div class="truncate text-sm text-fg-muted">{creator.username}</div>
+      </div>
+    </div>
+    <div class="text-right">
+      <div class="font-display text-2xl font-800 leading-none tabular-nums text-fg">{creator.score}</div>
+      <div class="text-[10px] font-600 uppercase tracking-[0.14em] text-fg-subtle">Score</div>
+    </div>
+  </div>
+
+  <div class="mt-4 flex flex-wrap items-center gap-2 text-xs">
+    <span class="chip">{creator.category}</span>
+    <span class="text-fg-subtle">{creator.location}</span>
+  </div>
+
+  <div class="mt-4 flex items-center justify-between border-t border-line pt-4">
+    <div class="flex items-center gap-2 text-sm text-fg-muted">
+      <span class="grid h-7 w-7 place-items-center rounded-lg bg-white/5" style={`color:${top.color}`}>
+        <PlatformIcon platform={creator.topPlatform} class="h-3.5 w-3.5" />
+      </span>
+      <span class="font-600 tabular-nums text-fg">{creator.platforms[creator.topPlatform]}</span>
+      <span class="text-fg-subtle">top</span>
+    </div>
+    <TrendIndicator trend={creator.trend} value={creator.trendValue} />
+  </div>
+
+  {
+    creator.campaignBonus > 0 && (
+      <div class="mt-3 flex items-center justify-between rounded-xl border border-brand-500/20 bg-brand-500/5 px-3 py-2">
+        <span class="text-xs font-500 text-brand-200">Campaign Bonus</span>
+        <span class="font-display text-sm font-700 tabular-nums text-brand-300">+{creator.campaignBonus}</span>
+      </div>
+    )
+  }
+</a>

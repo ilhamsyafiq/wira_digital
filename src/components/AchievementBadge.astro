@@ -1,0 +1,30 @@
+---
+export interface Props {
+  label: string;
+}
+const { label } = Astro.props;
+
+const icons: Record<string, string> = {
+  'Top Lifestyle Creator': '🏆',
+  'Top Food Creator': '🏆',
+  'Top Beauty Creator': '🏆',
+  'Top Travel Creator': '🏆',
+  'Top Fashion Creator': '🏆',
+  'Top Entertainment Creator': '🏆',
+  'Top Education Creator': '🏆',
+  'Top Tech Creator': '🏆',
+  'Top Business Creator': '🏆',
+  'Top Automotive Creator': '🏆',
+  'Top Sports Creator': '🏆',
+  'DailyMedia Featured': '📡',
+  'Campaign Champion': '🎯',
+  'Rising Creator': '🚀',
+  'Consistency Award': '📅',
+};
+const icon = icons[label] ?? '⭐';
+---
+
+<span class="inline-flex items-center gap-2 rounded-xl border border-line bg-white/[0.03] px-3 py-2 text-sm font-500 text-fg">
+  <span aria-hidden="true">{icon}</span>
+  {label}
+</span>

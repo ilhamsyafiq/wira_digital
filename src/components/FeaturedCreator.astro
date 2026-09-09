@@ -1,0 +1,79 @@
+---
+import type { Creator } from '../data/types';
+import { platformMap } from '../data/platforms';
+import Avatar from './Avatar.astro';
+import PlatformIcon from './PlatformIcon.astro';
+import TrendIndicator from './TrendIndicator.astro';
+import { withBase } from '../lib/url';
+
+export interface Props {
+  creator: Creator;
+  featured?: boolean;
+}
+const { creator, featured = false } = Astro.props;
+const top = platformMap[creator.topPlatform];
+---
+
+<div
+  class:list={[
+    'card card-hover relative flex flex-col overflow-hidden p-5',
+    featured && 'md:col-span-2 md:flex-row md:items-center md:gap-6',
+  ]}
+  data-reveal
+>
+  <div
+    class="pointer-events-none absolute -right-16 -top-16 h-40 w-40 rounded-full opacity-20 blur-2xl"
+    style="background:radial-gradient(circle,#14b892,transparent 70%)"
+  >
+  </div>
+
+  <div class="mb-4 flex items-center gap-2 md:absolute md:right-5 md:top-5 md:mb-0">
+    <span class="chip border-brand-500/25 bg-brand-500/5 text-brand-200">
+      <span class="inline-block h-1.5 w-1.5 rounded-full bg-brand-400"></span>
+      Featured on DailyMedia
+    </span>
+  </div>
+
+  <div class:list={['flex items-center gap-4', featured && 'md:flex-col md:items-start md:gap-3']}>
+    <Avatar initials={creator.avatar} seed={creator.slug} size={featured ? 72 : 56} />
+    <div class="min-w-0">
+      <div class="flex items-center gap-1.5">
+        <span class="truncate font-display text-lg font-700 text-fg">{creator.name}</span>
+        {
+          creator.verified && (
+            <svg class="h-4 w-4 shrink-0 text-brand-400" viewBox="0 0 24 24" fill="currentColor" aria-label="Verified">
+              <path d="M12 1.5l2.4 1.9 3-.3 1.2 2.8 2.7 1.4-.6 3 .6 3-2.7 1.4-1.2 2.8-3-.3L12 22.5l-2.4-1.9-3 .3-1.2-2.8-2.7-1.4.6-3-.6-3 2.7-1.4L6.6 3.1l3 .3L12 1.5Zm-1.1 13.2l5-5-1.3-1.3-3.7 3.7-1.8-1.8-1.3 1.3 3.1 3.1Z" />
+            </svg>
+          )
+        }
+      </div>
+      <div class="text-sm text-fg-muted">{creator.username} · {creator.category} Creator</div>
+    </div>
+  </div>
+
+  <div class:list={['mt-5 grid grid-cols-3 gap-3 md:flex-1', featured && 'md:mt-0']}>
+    <div class="rounded-xl border border-line bg-white/[0.02] p-3 text-center">
+      <div class="font-display text-2xl font-800 tabular-nums text-fg">{creator.score}</div>
+      <div class="text-[10px] uppercase tracking-wider text-fg-subtle">Wira Score</div>
+    </div>
+    <div class="rounded-xl border border-line bg-white/[0.02] p-3 text-center">
+      <div class="flex items-center justify-center gap-1 font-display text-2xl font-800 tabular-nums text-fg" style={`color:${top.color}`}>
+        <PlatformIcon platform={creator.topPlatform} class="h-4 w-4" />
+        {creator.platforms[creator.topPlatform]}
+      </div>
+      <div class="text-[10px] uppercase tracking-wider text-fg-subtle">Top Platform</div>
+    </div>
+    <div class="grid place-content-center rounded-xl border border-line bg-white/[0.02] p-3 text-center">
+      <TrendIndicator trend={creator.trend} value={creator.trendValue} size="md" />
+      <div class="mt-1 text-[10px] uppercase tracking-wider text-fg-subtle">Trending</div>
+    </div>
+  </div>
+
+  <a
+    href={withBase(`/creators/${creator.slug}`)}
+    class:list={['btn btn-ghost mt-5 w-full', featured && 'md:mt-0 md:w-auto md:shrink-0']}
+  >
+    View Creator
+    <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+  </a>
+</div>

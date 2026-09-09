@@ -1,0 +1,50 @@
+---
+import type { PlatformScores } from '../data/types';
+import { platforms } from '../data/platforms';
+import PlatformIcon from './PlatformIcon.astro';
+
+export interface Props {
+  scores: PlatformScores;
+  layout?: 'list' | 'grid';
+  class?: string;
+}
+const { scores, layout = 'list', class: className = '' } = Astro.props;
+const rows = platforms.filter((p) => typeof scores[p.id] === 'number');
+---
+
+{
+  layout === 'grid' ? (
+    <div class={`grid grid-cols-2 gap-2.5 sm:grid-cols-3 ${className}`}>
+      {rows.map((p) => (
+        <div class="flex items-center gap-2.5 rounded-xl border border-line bg-white/[0.02] px-3 py-2.5">
+          <span class="grid h-8 w-8 place-items-center rounded-lg bg-white/5" style={`color:${p.color}`}>
+            <PlatformIcon platform={p.id} class="h-4 w-4" />
+          </span>
+          <div>
+            <div class="text-[11px] text-fg-subtle">{p.name}</div>
+            <div class="font-display text-base font-700 tabular-nums text-fg">{scores[p.id]}</div>
+          </div>
+        </div>
+      ))}
+    </div>
+  ) : (
+    <div class={`flex flex-col gap-2.5 ${className}`}>
+      {rows.map((p) => (
+        <div class="flex items-center gap-3">
+          <span class="grid h-7 w-7 shrink-0 place-items-center rounded-lg bg-white/5" style={`color:${p.color}`}>
+            <PlatformIcon platform={p.id} class="h-3.5 w-3.5" />
+          </span>
+          <span class="w-20 shrink-0 text-sm text-fg-muted">{p.name}</span>
+          <div class="h-1.5 flex-1 overflow-hidden rounded-full bg-white/5">
+            <div
+              class="h-full rounded-full"
+              style={`width:0%;background:${p.color}`}
+              data-bar={scores[p.id]}
+            />
+          </div>
+          <span class="w-8 shrink-0 text-right font-700 tabular-nums text-fg">{scores[p.id]}</span>
+        </div>
+      ))}
+    </div>
+  )
+}

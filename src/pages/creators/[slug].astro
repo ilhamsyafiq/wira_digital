@@ -1,0 +1,188 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Avatar from '../../components/Avatar.astro';
+import ScoreRing from '../../components/ScoreRing.astro';
+import ScoreBreakdown from '../../components/ScoreBreakdown.astro';
+import PlatformScore from '../../components/PlatformScore.astro';
+import CampaignBonus from '../../components/CampaignBonus.astro';
+import AchievementBadge from '../../components/AchievementBadge.astro';
+import TrendIndicator from '../../components/TrendIndicator.astro';
+import CampaignCard from '../../components/CampaignCard.astro';
+import { creators, getCreator } from '../../data/creators';
+import { creatorScopeSnapshot } from '../../data/rankings';
+import { campaigns } from '../../data/campaigns';
+import { platformMap } from '../../data/platforms';
+import { withBase } from '../../lib/url';
+
+export function getStaticPaths() {
+  return creators.map((c) => ({ params: { slug: c.slug } }));
+}
+
+const { slug } = Astro.params;
+const creator = getCreator(slug!)!;
+const snapshot = creatorScopeSnapshot(creator);
+const topPct = Math.max(1, Math.round((creator.rank / creators.length) * 100));
+const relatedCampaigns = campaigns.filter((c) => c.featuredCreators.includes(creator.slug));
+---
+
+<Layout
+  title={`${creator.name} (${creator.username}) — Wiradigital Creator Profile`}
+  description={`${creator.name} — ${creator.category} creator dari ${creator.location}. Wiradigital Score ${creator.score}. Lihat prestasi platform, rekod kempen & ciri DailyMedia.`}
+  path={`/creators/${creator.slug}`}
+  ogType="profile"
+>
+  <section class="container-wd pt-6 pb-16">
+    <a href={withBase('/creators')} class="mb-6 inline-flex items-center gap-1.5 text-sm text-fg-muted transition-colors hover:text-fg">
+      <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M11 18l-6-6 6-6"/></svg>
+      Semua creator
+    </a>
+
+    <!-- Header -->
+    <div class="card relative overflow-hidden p-6 sm:p-8" data-reveal>
+      <div class="pointer-events-none absolute -right-24 -top-24 h-64 w-64 rounded-full bg-brand-500/10 blur-3xl"></div>
+      <div class="flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-between">
+        <div class="flex items-center gap-5">
+          <Avatar initials={creator.avatar} seed={creator.slug} size={88} />
+          <div>
+            <div class="flex items-center gap-2">
+              <h1 class="font-display text-2xl font-800 text-fg sm:text-3xl">{creator.name}</h1>
+              {creator.verified && (
+                <svg class="h-6 w-6 text-brand-400" viewBox="0 0 24 24" fill="currentColor" aria-label="Verified"><path d="M12 1.5l2.4 1.9 3-.3 1.2 2.8 2.7 1.4-.6 3 .6 3-2.7 1.4-1.2 2.8-3-.3L12 22.5l-2.4-1.9-3 .3-1.2-2.8-2.7-1.4.6-3-.6-3 2.7-1.4L6.6 3.1l3 .3L12 1.5Zm-1.1 13.2l5-5-1.3-1.3-3.7 3.7-1.8-1.8-1.3 1.3 3.1 3.1Z"/></svg>
+              )}
+            </div>
+            <div class="mt-1 text-fg-muted">{creator.username}</div>
+            <div class="mt-3 flex flex-wrap items-center gap-2">
+              <span class="chip">{creator.category}</span>
+              <span class="text-sm text-fg-subtle">{creator.location}</span>
+              <span class="text-sm text-fg-subtle">· {creator.followers} followers</span>
+            </div>
+          </div>
+        </div>
+        <div class="flex items-center gap-6">
+          <div class="text-center">
+            <div class="font-display text-3xl font-800 tabular-nums text-fg">#{creator.rank}</div>
+            <div class="text-[10px] uppercase tracking-wider text-fg-subtle">Overall</div>
+          </div>
+          <div class="text-center">
+            <TrendIndicator trend={creator.trend} value={creator.trendValue} size="md" />
+            <div class="mt-1 text-[10px] uppercase tracking-wider text-fg-subtle">Movement</div>
+          </div>
+        </div>
+      </div>
+      <p class="mt-6 max-w-2xl text-sm leading-relaxed text-fg-muted">{creator.bio}</p>
+    </div>
+
+    <div class="mt-6 grid gap-6 lg:grid-cols-[1fr_1.4fr]">
+      <!-- Score card -->
+      <div class="card flex flex-col items-center gap-5 p-6 text-center" data-reveal>
+        <ScoreRing score={creator.score} size={172} label="Wira Score" />
+        <div class="chip border-brand-500/25 bg-brand-500/5 text-brand-200">Top {topPct}% Malaysia · Example</div>
+        <div class="w-full border-t border-line pt-5 text-left">
+          <h3 class="mb-3 text-sm font-700 uppercase tracking-wider text-fg-subtle">Performance</h3>
+          <ScoreBreakdown performance={creator.performance} />
+        </div>
+      </div>
+
+      <div class="flex flex-col gap-6">
+        <!-- Platform scores -->
+        <div class="card p-6" data-reveal>
+          <h3 class="mb-4 text-sm font-700 uppercase tracking-wider text-fg-subtle">Platform Scores</h3>
+          <PlatformScore scores={creator.platforms} layout="list" />
+        </div>
+
+        <!-- Overall vs platform ranking -->
+        <div class="card p-6" data-reveal>
+          <h3 class="mb-4 text-sm font-700 uppercase tracking-wider text-fg-subtle">Overall vs Platform Ranking</h3>
+          <div class="grid grid-cols-2 gap-3 sm:grid-cols-3">
+            {
+              snapshot.map((s) => (
+                <div class:list={['rounded-xl border p-3.5', s.scope === 'all' ? 'border-brand-500/30 bg-brand-500/5' : 'border-line bg-white/[0.02]']}>
+                  <div class="text-[11px] font-600 uppercase tracking-wider text-fg-subtle">{s.scope === 'all' ? 'Overall' : platformMap[s.scope as keyof typeof platformMap]?.name}</div>
+                  <div class="mt-1 flex items-baseline gap-2">
+                    <span class="font-display text-xl font-800 tabular-nums text-fg">#{s.rank}</span>
+                    <span class="text-sm tabular-nums text-fg-muted">{s.score}</span>
+                  </div>
+                </div>
+              ))
+            }
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Score composition -->
+    <div class="mt-6 grid gap-6 lg:grid-cols-2">
+      <div data-reveal>
+        <h3 class="mb-3 font-display text-lg font-700 text-fg">Bagaimana skor ini dibina</h3>
+        <CampaignBonus base={creator.baseScore} campaignBonus={creator.campaignBonus} dailyMediaBonus={creator.dailyMediaBonus} />
+      </div>
+
+      <!-- Campaign record + DailyMedia -->
+      <div class="flex flex-col gap-6">
+        <div class="card p-6" data-reveal>
+          <h3 class="mb-4 font-display text-lg font-700 text-fg">Campaign Record</h3>
+          <div class="grid grid-cols-2 gap-3">
+            <div class="rounded-xl border border-line bg-white/[0.02] p-4">
+              <div class="font-display text-2xl font-800 tabular-nums text-fg">{creator.campaignsCompleted}</div>
+              <div class="text-xs text-fg-subtle">Campaigns Completed</div>
+            </div>
+            <div class="rounded-xl border border-line bg-white/[0.02] p-4">
+              <div class="font-display text-2xl font-800 tabular-nums text-fg">{creator.avgCampaignScore}</div>
+              <div class="text-xs text-fg-subtle">Avg Campaign Score</div>
+            </div>
+            <div class="rounded-xl border border-brand-500/25 bg-brand-500/5 p-4">
+              <div class="font-display text-2xl font-800 tabular-nums text-brand-300">+{creator.campaignBonus}</div>
+              <div class="text-xs text-brand-200/80">Campaign Bonus Earned</div>
+            </div>
+            <div class="rounded-xl border border-line bg-white/[0.02] p-4">
+              <div class="font-display text-2xl font-800 tabular-nums text-fg">{creator.trend === 'up' ? '↑' : creator.trend === 'down' ? '↓' : '—'} {creator.trend !== 'stable' ? creator.trendValue : ''}</div>
+              <div class="text-xs text-fg-subtle">Ranking Movement</div>
+            </div>
+          </div>
+        </div>
+
+        {
+          creator.dailyMedia.featured && (
+            <div class="card relative overflow-hidden p-6" data-reveal>
+              <div class="pointer-events-none absolute -right-16 -top-16 h-40 w-40 rounded-full bg-brand-500/10 blur-2xl" />
+              <div class="flex items-center gap-2">
+                <span class="chip border-brand-500/25 bg-brand-500/5 text-brand-200">📡 Featured by DailyMedia</span>
+              </div>
+              <div class="mt-4 grid grid-cols-2 gap-3">
+                <div class="rounded-xl border border-line bg-white/[0.02] p-4">
+                  <div class="font-display text-2xl font-800 tabular-nums text-fg">{creator.dailyMedia.features}</div>
+                  <div class="text-xs text-fg-subtle">Number of features</div>
+                </div>
+                <div class="rounded-xl border border-line bg-white/[0.02] p-4">
+                  <div class="font-display text-lg font-800 text-fg">{creator.dailyMedia.lastFeatured}</div>
+                  <div class="text-xs text-fg-subtle">Last featured</div>
+                </div>
+              </div>
+              <p class="mt-3 text-xs text-fg-muted">DailyMedia Exposure ditunjukkan sebagai penunjuk berasingan &amp; bonus (+{creator.dailyMediaBonus}) di atas.</p>
+            </div>
+          )
+        }
+      </div>
+    </div>
+
+    <!-- Achievements -->
+    <div class="mt-6 card p-6" data-reveal>
+      <h3 class="mb-4 font-display text-lg font-700 text-fg">Achievements</h3>
+      <div class="flex flex-wrap gap-2.5">
+        {creator.achievements.map((a) => <AchievementBadge label={a} />)}
+      </div>
+    </div>
+
+    <!-- Related campaigns -->
+    {
+      relatedCampaigns.length > 0 && (
+        <div class="mt-10">
+          <h3 class="mb-5 font-display text-xl font-700 text-fg">Kempen disertai</h3>
+          <div class="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+            {relatedCampaigns.map((c) => <CampaignCard campaign={c} />)}
+          </div>
+        </div>
+      )
+    }
+  </section>
+</Layout>

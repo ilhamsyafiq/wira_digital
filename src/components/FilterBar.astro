@@ -1,0 +1,58 @@
+---
+import { categoryNames, states } from '../data/categories';
+
+export interface Props {
+  class?: string;
+}
+const { class: className = '' } = Astro.props;
+
+const selects = [
+  { id: 'filter-category', label: 'Category', options: categoryNames },
+  { id: 'filter-state', label: 'State', options: states },
+  {
+    id: 'filter-sort',
+    label: 'Sort',
+    options: ['Score: High → Low', 'Score: Low → High', 'Rising first', 'Alphabetical'],
+    noAll: true,
+  },
+];
+---
+
+<div class={`grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4 ${className}`}>
+  <label class="relative sm:col-span-2 lg:col-span-1">
+    <span class="mb-1.5 block text-xs font-600 uppercase tracking-wider text-fg-subtle">Search</span>
+    <input
+      id="filter-search"
+      type="search"
+      placeholder="Cari creator…"
+      class="w-full rounded-xl border border-line bg-surface px-3.5 py-2.5 text-sm text-fg placeholder:text-fg-subtle outline-none transition-colors focus:border-brand-500/60"
+    />
+  </label>
+  {
+    selects.map((s) => (
+      <label class="relative">
+        <span class="mb-1.5 block text-xs font-600 uppercase tracking-wider text-fg-subtle">{s.label}</span>
+        <select
+          id={s.id}
+          class="w-full appearance-none rounded-xl border border-line bg-surface px-3.5 py-2.5 pr-9 text-sm text-fg outline-none transition-colors focus:border-brand-500/60"
+        >
+          {!s.noAll && <option value="">All {s.label.toLowerCase()}s</option>}
+          {s.options.map((o) => (
+            <option value={o}>{o}</option>
+          ))}
+        </select>
+        <svg
+          class="pointer-events-none absolute right-3 top-[2.4rem] h-4 w-4 text-fg-subtle"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <path d="M6 9l6 6 6-6" />
+        </svg>
+      </label>
+    ))
+  }
+</div>

@@ -1,0 +1,95 @@
+---
+import Logo from './Logo.astro';
+import { withBase } from '../lib/url';
+
+const cols = [
+  {
+    title: 'Platform',
+    links: [
+      { href: '/ranking', label: 'Ranking' },
+      { href: '/creators', label: 'Creators' },
+      { href: '/campaigns', label: 'Campaigns' },
+      { href: '/dailymedia', label: 'DailyMedia' },
+    ],
+  },
+  {
+    title: 'Learn',
+    links: [
+      { href: '/how-it-works', label: 'How It Works' },
+      { href: '/how-it-works#score', label: 'Wiradigital Score' },
+      { href: '/how-it-works#creators', label: 'For Creators' },
+      { href: '/how-it-works#brands', label: 'For Brands' },
+    ],
+  },
+];
+
+const socials = [
+  { label: 'Instagram', href: '#' },
+  { label: 'TikTok', href: '#' },
+  { label: 'Threads', href: '#' },
+  { label: 'YouTube', href: '#' },
+];
+const year = 2026;
+---
+
+<footer class="relative mt-24 border-t border-line">
+  <div class="container-wd py-14">
+    <div class="grid gap-10 md:grid-cols-[1.4fr_1fr_1fr_1.2fr]">
+      <div>
+        <Logo />
+        <p class="mt-4 max-w-xs text-sm leading-relaxed text-fg-muted">
+          Social Media Creator Ranking &amp; Discovery Platform. Kenali. Nilai. Ranking.
+        </p>
+        <div class="mt-5 flex flex-wrap gap-2">
+          {
+            socials.map((s) => (
+              <a
+                href={s.href}
+                class="chip hover:border-line-strong hover:text-fg"
+                aria-label={s.label}
+              >
+                {s.label}
+              </a>
+            ))
+          }
+        </div>
+      </div>
+
+      {
+        cols.map((c) => (
+          <div>
+            <h3 class="text-xs font-700 uppercase tracking-[0.14em] text-fg-subtle">{c.title}</h3>
+            <ul class="mt-4 space-y-2.5">
+              {c.links.map((l) => (
+                <li>
+                  <a href={withBase(l.href)} class="text-sm text-fg-muted transition-colors hover:text-fg">
+                    {l.label}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))
+      }
+
+      <div>
+        <h3 class="text-xs font-700 uppercase tracking-[0.14em] text-fg-subtle">Contact</h3>
+        <ul class="mt-4 space-y-2.5 text-sm text-fg-muted">
+          <li><a href="mailto:hello@wiradigital.my" class="transition-colors hover:text-fg">hello@wiradigital.my</a></li>
+          <li>Kuala Lumpur, Malaysia</li>
+          <li><a href="#about" class="transition-colors hover:text-fg">About</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="divider mt-12"></div>
+
+    <div class="mt-6 flex flex-col items-center justify-between gap-3 text-xs text-fg-subtle sm:flex-row">
+      <p>© {year} Wiradigital. All rights reserved.</p>
+      <p class="flex items-center gap-1.5">
+        <span class="inline-block h-1.5 w-1.5 rounded-full bg-brand-400"></span>
+        Demo data — rankings &amp; scores are illustrative samples.
+      </p>
+    </div>
+  </div>
+</footer>

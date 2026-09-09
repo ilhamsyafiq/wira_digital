@@ -1,0 +1,124 @@
+---
+import type { Creator } from '../data/types';
+import { platforms, platformMap } from '../data/platforms';
+import PlatformIcon from './PlatformIcon.astro';
+import Avatar from './Avatar.astro';
+import { withBase } from '../lib/url';
+
+export interface Props {
+  creator: Creator; // the #1 creator, shown in the hero score card
+}
+const { creator } = Astro.props;
+---
+
+<section class="relative overflow-hidden pt-10 pb-16 sm:pt-16 sm:pb-24">
+  <!-- background grid + glow -->
+  <div class="pointer-events-none absolute inset-0 -z-10 grid-overlay opacity-[0.5]"></div>
+
+  <div class="container-wd grid items-center gap-12 lg:grid-cols-[1.05fr_0.95fr]">
+    <!-- Left -->
+    <div>
+      <span class="eyebrow" data-reveal>
+        <span class="inline-block h-1.5 w-1.5 rounded-full bg-brand-400"></span>
+        Discover · Rank · Influence
+      </span>
+
+      <h1
+        class="mt-5 font-display text-4xl font-800 leading-[1.05] tracking-tight sm:text-5xl lg:text-6xl"
+        data-reveal
+      >
+        Siapa <span class="text-gradient">Creator</span> Paling Berpengaruh Malaysia?
+      </h1>
+
+      <p class="mt-5 max-w-xl text-lg leading-relaxed text-fg-muted" data-reveal style="transition-delay:80ms">
+        Wiradigital menilai, menyusun dan memaparkan creator berdasarkan
+        <span class="text-fg">prestasi sebenar</span> di media sosial — satu ranking untuk melihat siapa yang benar-benar memberi impak.
+      </p>
+
+      <div class="mt-8 flex flex-wrap items-center gap-3" data-reveal style="transition-delay:160ms">
+        <a href={withBase('/ranking')} class="btn btn-primary">
+          Lihat Ranking
+          <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </a>
+        <a href={withBase('/creators')} class="btn btn-ghost">Explore Creators</a>
+      </div>
+
+      <!-- platform strip -->
+      <div class="mt-10 flex items-center gap-4" data-reveal style="transition-delay:220ms">
+        <span class="text-xs font-600 uppercase tracking-[0.14em] text-fg-subtle">Ranking merentas</span>
+        <div class="flex items-center gap-2.5">
+          {
+            platforms.map((p) => (
+              <span class="grid h-8 w-8 place-items-center rounded-lg border border-line bg-white/[0.03]" style={`color:${p.color}`} title={p.name}>
+                <PlatformIcon platform={p.id} class="h-4 w-4" />
+              </span>
+            ))
+          }
+        </div>
+      </div>
+    </div>
+
+    <!-- Right: Wiradigital Score card -->
+    <div class="relative" data-reveal style="transition-delay:120ms">
+      <div class="pointer-events-none absolute -inset-6 -z-10 rounded-[2rem] bg-[radial-gradient(60%_50%_at_70%_0%,rgba(20,184,146,0.18),transparent_70%)]"></div>
+
+      <div class="card relative p-6 shadow-2xl">
+        <div class="flex items-center justify-between">
+          <span class="eyebrow text-fg-subtle">Wiradigital Score</span>
+          <span class="chip border-brand-500/25 bg-brand-500/5 text-brand-200">Demo</span>
+        </div>
+
+        <div class="mt-5 flex items-center gap-5">
+          <div class="relative grid place-items-center">
+            <div class="font-display text-6xl font-800 leading-none tabular-nums text-gradient">
+              <span data-count={creator.score}>0</span>
+            </div>
+          </div>
+          <div class="pb-1">
+            <div class="text-2xl font-800 text-fg-subtle">/100</div>
+          </div>
+        </div>
+
+        <div class="mt-5 flex items-center gap-3 border-t border-line pt-5">
+          <Avatar initials={creator.avatar} seed={creator.slug} size={44} />
+          <div>
+            <div class="flex items-center gap-1.5">
+              <span class="font-600 text-fg">{creator.username}</span>
+              <svg class="h-4 w-4 text-brand-400" viewBox="0 0 24 24" fill="currentColor"><path d="M12 1.5l2.4 1.9 3-.3 1.2 2.8 2.7 1.4-.6 3 .6 3-2.7 1.4-1.2 2.8-3-.3L12 22.5l-2.4-1.9-3 .3-1.2-2.8-2.7-1.4.6-3-.6-3 2.7-1.4L6.6 3.1l3 .3L12 1.5Zm-1.1 13.2l5-5-1.3-1.3-3.7 3.7-1.8-1.8-1.3 1.3 3.1 3.1Z"/></svg>
+            </div>
+            <div class="text-sm text-fg-muted">{creator.category} Creator · {creator.location}</div>
+          </div>
+        </div>
+
+        <div class="mt-5 grid grid-cols-2 gap-2.5">
+          {
+            platforms.map((p) => (
+              typeof creator.platforms[p.id] === 'number' && (
+                <div class="flex items-center justify-between rounded-xl border border-line bg-white/[0.02] px-3 py-2.5">
+                  <span class="flex items-center gap-2 text-sm text-fg-muted">
+                    <span style={`color:${p.color}`}><PlatformIcon platform={p.id} class="h-3.5 w-3.5" /></span>
+                    {p.name}
+                  </span>
+                  <span class="font-700 tabular-nums text-fg">{creator.platforms[p.id]}</span>
+                </div>
+              )
+            ))
+          }
+        </div>
+
+        <div class="mt-5 flex items-center justify-between rounded-xl border border-brand-400/30 bg-[linear-gradient(120deg,rgba(20,184,146,0.12),rgba(139,92,246,0.08))] px-4 py-3">
+          <span class="text-sm font-600 text-fg">#{creator.rank} {creator.category}</span>
+          <span class="inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-sm font-700 text-rise" style="background:color-mix(in srgb, var(--color-rise) 12%, transparent)">
+            ↑ +{creator.trendValue} Ranking
+          </span>
+        </div>
+      </div>
+
+      <!-- floating mini badge -->
+      <div class="animate-float absolute -left-4 -bottom-4 hidden rounded-2xl border border-line bg-surface-2/90 px-4 py-3 backdrop-blur sm:block">
+        <div class="text-[10px] uppercase tracking-wider text-fg-subtle">Campaign Bonus</div>
+        <div class="font-display text-lg font-800 text-brand-300">+{creator.campaignBonus} pts</div>
+      </div>
+    </div>
+  </div>
+</section>

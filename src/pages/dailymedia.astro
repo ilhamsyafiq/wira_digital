@@ -1,0 +1,109 @@
+---
+import Layout from '../layouts/Layout.astro';
+import SectionHeader from '../components/SectionHeader.astro';
+import FeaturedCreator from '../components/FeaturedCreator.astro';
+import DailyMediaCard from '../components/DailyMediaCard.astro';
+import DistributionFlow from '../components/DistributionFlow.astro';
+import CampaignCard from '../components/CampaignCard.astro';
+import { dailyMediaCreators, risingCreators, overallRanking } from '../data/creators';
+import { activeCampaigns } from '../data/campaigns';
+import { withBase } from '../lib/url';
+
+const featured = dailyMediaCreators();
+const hero = featured.slice(0, 4);
+const trending = risingCreators(6);
+const topCreators = overallRanking().slice(0, 6);
+const campaigns = activeCampaigns.slice(0, 3);
+---
+
+<Layout
+  title="DailyMedia — Featured Creators & Content | Wiradigital"
+  description="DailyMedia — platform pertama untuk menampilkan creator dan kandungan pilihan Wiradigital sebelum disebarkan ke rangkaian media sosial yang lebih luas."
+  path="/dailymedia"
+>
+  <!-- Hero -->
+  <section class="relative overflow-hidden pt-8 pb-12">
+    <div class="pointer-events-none absolute inset-0 -z-10 grid-overlay opacity-40"></div>
+    <div class="container-wd">
+      <SectionHeader
+        eyebrow="📡 DailyMedia"
+        title="Platform pertama untuk kandungan <span class='text-brand-gradient'>pilihan Wiradigital</span>"
+        subtitle="Creator dan kandungan pilihan ditampilkan di DailyMedia terlebih dahulu — sebelum disebarkan melalui rangkaian media sosial yang lebih luas."
+      />
+      <div class="mt-6 flex flex-wrap gap-2">
+        {['Featured', 'Trending', 'Creators', 'Campaigns', 'Stories'].map((t, i) => (
+          <span class:list={['chip', i === 0 && 'border-brand-500/25 bg-brand-500/5 text-brand-200']}>{t}</span>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Featured -->
+  <section id="featured" class="container-wd pb-14">
+    <h2 class="mb-6 font-display text-2xl font-800 text-fg">Featured</h2>
+    <div class="grid gap-4 md:grid-cols-2">
+      {hero.map((c, i) => <FeaturedCreator creator={c} featured={i === 0} />)}
+    </div>
+  </section>
+
+  <!-- Distribution concept -->
+  <section class="relative overflow-hidden py-16">
+    <div class="container-wd">
+      <div class="card overflow-hidden p-6 sm:p-10" data-reveal>
+        <div class="grid items-center gap-10 lg:grid-cols-[1fr_1fr]">
+          <div>
+            <span class="eyebrow">From DailyMedia to wider social reach</span>
+            <h2 class="mt-3 font-display text-2xl font-800 text-fg sm:text-3xl">Listed on DailyMedia first, then distributed wider.</h2>
+            <p class="mt-4 leading-relaxed text-fg-muted">
+              Setiap kandungan pilihan boleh bermula di DailyMedia sebelum disebarkan melalui rangkaian media sosial yang lebih luas.
+            </p>
+            <p class="mt-4 rounded-xl border border-line bg-white/[0.02] p-4 text-sm text-fg-muted">
+              Nota penting: Bukan setiap creator diedarkan secara automatik. Hanya kandungan <span class="text-fg">terpilih / featured</span> yang disebarkan lebih luas.
+            </p>
+          </div>
+          <div>
+            <DistributionFlow
+              steps={[
+                { label: 'Creator', desc: 'Kandungan berkualiti' },
+                { label: 'Wiradigital', desc: 'Dinilai & disusun' },
+                { label: 'DailyMedia', desc: 'Ditampilkan dahulu', highlight: true },
+                { label: 'Social Distribution', desc: 'Disebarkan lebih luas' },
+              ]}
+              fanOut
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Trending -->
+  <section id="trending" class="container-wd py-14">
+    <h2 class="mb-6 font-display text-2xl font-800 text-fg">Trending</h2>
+    <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+      {trending.map((c) => <DailyMediaCard creator={c} tag="Trending" />)}
+    </div>
+  </section>
+
+  <!-- Creators -->
+  <section id="creators" class="container-wd py-14">
+    <div class="mb-6 flex items-end justify-between">
+      <h2 class="font-display text-2xl font-800 text-fg">Creators</h2>
+      <a href={withBase('/creators')} class="btn btn-ghost hidden sm:inline-flex">Semua creator</a>
+    </div>
+    <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+      {topCreators.map((c) => <DailyMediaCard creator={c} tag="Creator" />)}
+    </div>
+  </section>
+
+  <!-- Campaigns -->
+  <section id="campaigns" class="container-wd py-14">
+    <div class="mb-6 flex items-end justify-between">
+      <h2 class="font-display text-2xl font-800 text-fg">Campaigns</h2>
+      <a href={withBase('/campaigns')} class="btn btn-ghost hidden sm:inline-flex">Semua kempen</a>
+    </div>
+    <div class="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+      {campaigns.map((c) => <CampaignCard campaign={c} />)}
+    </div>
+  </section>
+</Layout>

@@ -1,0 +1,39 @@
+---
+import type { Performance } from '../data/types';
+
+export interface Props {
+  performance: Performance;
+  class?: string;
+}
+const { performance, class: className = '' } = Astro.props;
+
+const rows: { label: string; value: number }[] = [
+  { label: 'Engagement', value: performance.engagement },
+  { label: 'Consistency', value: performance.consistency },
+  { label: 'Growth', value: performance.growth },
+  { label: 'Content Quality', value: performance.contentQuality },
+  { label: 'Audience Quality', value: performance.audienceQuality },
+  { label: 'Brand Safety', value: performance.brandSafety },
+];
+---
+
+<div class={`flex flex-col gap-3.5 ${className}`}>
+  {
+    rows.map((r) => (
+      <div>
+        <div class="mb-1.5 flex items-center justify-between text-sm">
+          <span class="text-fg-muted">{r.label}</span>
+          <span class="font-700 tabular-nums text-fg">{r.value}</span>
+        </div>
+        <div class="h-2 overflow-hidden rounded-full bg-white/5">
+          <div
+            class="h-full rounded-full bg-[linear-gradient(90deg,#0b9678,#34d3a1)]"
+            style={`width:0%`}
+            data-bar={r.value}
+          />
+        </div>
+      </div>
+    ))
+  }
+</div>
+<!-- Bar fill animation handled globally in Layout via [data-bar] -->

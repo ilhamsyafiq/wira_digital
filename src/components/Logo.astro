@@ -1,0 +1,18 @@
+---
+import { withBase } from '../lib/url';
+export interface Props {
+  class?: string;
+}
+const { class: className = '' } = Astro.props;
+---
+
+<a href={withBase('/')} class={`group inline-flex items-center gap-2.5 ${className}`} aria-label="Wiradigital home">
+  <span class="relative grid h-9 w-9 place-items-center rounded-xl" style="background:linear-gradient(135deg,#34d3a1,#0b9678);box-shadow:0 8px 20px -8px rgba(20,184,146,0.8);">
+    <svg viewBox="0 0 24 24" class="h-5 w-5 text-[#04120e]" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <path d="M3 5l3.2 13L12 8l5.8 10L21 5" />
+    </svg>
+  </span>
+  <span class="font-display text-lg font-800 tracking-tight text-fg">
+    Wira<span class="text-brand-400">digital</span>
+  </span>
+</a>

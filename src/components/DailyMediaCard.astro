@@ -1,0 +1,35 @@
+---
+import type { Creator } from '../data/types';
+import Avatar from './Avatar.astro';
+import TrendIndicator from './TrendIndicator.astro';
+import { withBase } from '../lib/url';
+
+export interface Props {
+  creator: Creator;
+  tag?: string;
+}
+const { creator, tag = 'Featured' } = Astro.props;
+---
+
+<a href={withBase(`/creators/${creator.slug}`)} class="card card-hover group relative flex flex-col overflow-hidden" data-reveal>
+  <div class="relative h-24 overflow-hidden" style="background:linear-gradient(120deg,#0f5f50,#161925)">
+    <div class="absolute inset-0 opacity-30 grid-overlay"></div>
+    <span class="absolute left-4 top-3.5 chip border-white/15 bg-black/30 text-fg backdrop-blur-sm">{tag}</span>
+    <div class="absolute -bottom-6 left-5">
+      <Avatar initials={creator.avatar} seed={creator.slug} size={52} class="ring-4 ring-[#10121b]" />
+    </div>
+  </div>
+  <div class="flex flex-1 flex-col p-5 pt-9">
+    <div class="flex items-center gap-1.5">
+      <span class="font-600 text-fg">{creator.name}</span>
+    </div>
+    <div class="text-sm text-fg-muted">{creator.username} · {creator.category}</div>
+    <div class="mt-4 flex items-center justify-between border-t border-line pt-4">
+      <div>
+        <span class="font-display text-xl font-800 tabular-nums text-fg">{creator.score}</span>
+        <span class="ml-1 text-[10px] uppercase tracking-wider text-fg-subtle">Wira Score</span>
+      </div>
+      <TrendIndicator trend={creator.trend} value={creator.trendValue} />
+    </div>
+  </div>
+</a>

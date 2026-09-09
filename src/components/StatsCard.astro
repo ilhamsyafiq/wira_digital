@@ -1,0 +1,19 @@
+---
+export interface Props {
+  value: number;
+  label: string;
+  suffix?: string;
+  prefix?: string;
+  decimals?: number;
+  hint?: string;
+}
+const { value, label, suffix = '', prefix = '', decimals = 0, hint } = Astro.props;
+---
+
+<div class="card card-hover p-5" data-reveal>
+  <div class="font-display text-3xl font-800 tabular-nums text-fg sm:text-4xl">
+    <span data-count={value} data-suffix={suffix} data-prefix={prefix} data-decimals={decimals}>{prefix}0{suffix}</span>
+  </div>
+  <div class="mt-1.5 text-sm font-500 text-fg">{label}</div>
+  {hint && <div class="mt-0.5 text-xs text-fg-subtle">{hint}</div>}
+</div>

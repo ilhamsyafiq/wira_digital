@@ -1,0 +1,26 @@
+---
+import Layout from '../layouts/Layout.astro';
+import SectionHeader from '../components/SectionHeader.astro';
+import RankingExplorer from '../components/RankingExplorer.astro';
+import { overallRanking } from '../data/creators';
+
+const creators = overallRanking();
+---
+
+<Layout
+  title="Social Media Creator Ranking — Wiradigital"
+  description="Ranking creator media sosial Malaysia berdasarkan prestasi mereka di Instagram, TikTok, Threads, Facebook & YouTube. Tapis ikut platform, kategori & negeri."
+  path="/ranking"
+>
+  <section class="container-wd pt-8 pb-16">
+    <div class="mb-8">
+      <SectionHeader
+        eyebrow="Demo Ranking"
+        title="Social Media Creator Ranking"
+        subtitle="Ranking creator berdasarkan prestasi mereka di pelbagai platform media sosial. Tukar tab platform untuk melihat ranking khusus platform tersebut."
+      />
+    </div>
+
+    <RankingExplorer creators={creators} showFilters={true} />
+  </section>
+</Layout>

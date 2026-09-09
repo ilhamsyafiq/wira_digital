@@ -1,0 +1,66 @@
+---
+export interface Props {
+  score: number;
+  size?: number;
+  stroke?: number;
+  label?: string;
+  animate?: boolean;
+  max?: number;
+}
+const { score, size = 140, stroke = 10, label = 'Score', animate = true, max = 100 } = Astro.props;
+const r = (size - stroke) / 2;
+const circ = 2 * Math.PI * r;
+const pct = Math.max(0, Math.min(1, score / max));
+const offset = circ * (1 - pct);
+const uid = 'ring-' + Math.random().toString(36).slice(2, 9);
+---
+
+<div class="relative inline-grid place-items-center" style={`width:${size}px;height:${size}px`}>
+  <svg width={size} height={size} viewBox={`0 0 ${size} ${size}`} class="-rotate-90">
+    <defs>
+      <linearGradient id={uid} x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stop-color="#34d3a1" />
+        <stop offset="100%" stop-color="#0b9678" />
+      </linearGradient>
+    </defs>
+    <circle cx={size / 2} cy={size / 2} r={r} fill="none" stroke="rgba(255,255,255,0.08)" stroke-width={stroke} />
+    <circle
+      cx={size / 2}
+      cy={size / 2}
+      r={r}
+      fill="none"
+      stroke={`url(#${uid})`}
+      stroke-width={stroke}
+      stroke-linecap="round"
+      stroke-dasharray={circ}
+      stroke-dashoffset={animate ? circ : offset}
+      style={`transition: stroke-dashoffset 1.4s var(--ease-out-soft);`}
+      data-ring-target={offset}
+    />
+  </svg>
+  <div class="absolute inset-0 grid place-content-center text-center">
+    <span
+      class="font-display font-800 leading-none tabular-nums"
+      style={`font-size:${Math.round(size * 0.26)}px`}
+      data-count={score}
+      >{animate ? 0 : score}</span
+    >
+    <span class="mt-1 text-[10px] font-600 uppercase tracking-[0.18em] text-fg-subtle">{label}</span>
+  </div>
+</div>
+
+<script>
+  const io = new IntersectionObserver(
+    (entries) => {
+      for (const e of entries) {
+        if (!e.isIntersecting) continue;
+        const c = e.target as SVGCircleElement;
+        const target = c.getAttribute('data-ring-target');
+        if (target) c.style.strokeDashoffset = target;
+        io.unobserve(c);
+      }
+    },
+    { threshold: 0.4 },
+  );
+  document.querySelectorAll('[data-ring-target]').forEach((el) => io.observe(el));
+</script>

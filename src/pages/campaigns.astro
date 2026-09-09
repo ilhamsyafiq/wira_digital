@@ -1,0 +1,80 @@
+---
+import Layout from '../layouts/Layout.astro';
+import SectionHeader from '../components/SectionHeader.astro';
+import CampaignCard from '../components/CampaignCard.astro';
+import { campaigns } from '../data/campaigns';
+
+const groups = [
+  { key: 'active', label: 'Active', items: campaigns.filter((c) => c.status === 'active') },
+  { key: 'upcoming', label: 'Upcoming', items: campaigns.filter((c) => c.status === 'upcoming') },
+  { key: 'completed', label: 'Completed', items: campaigns.filter((c) => c.status === 'completed') },
+];
+---
+
+<Layout
+  title="Campaigns — Earn Ranking Bonus Points | Wiradigital"
+  description="Kempen Wiradigital yang menjana markah bonus ranking untuk creator. Lihat kempen aktif, prestasi kempen dan bagaimana bonus menyumbang kepada ranking."
+  path="/campaigns"
+>
+  <section class="container-wd pt-8 pb-12">
+    <SectionHeader
+      eyebrow="Wiradigital Campaigns"
+      title="Kempen yang menaikkan <span class='text-brand-gradient'>ranking anda</span>"
+      subtitle="Sertai kempen terpilih, tunjukkan prestasi, dan kumpul markah bonus yang menyumbang kepada Wiradigital Score anda. (Demo — tiada sistem permohonan sebenar.)"
+      class="mb-6"
+    />
+  </section>
+
+  <!-- Campaign → ranking flow -->
+  <section class="container-wd pb-14">
+    <div class="card p-6 sm:p-8" data-reveal>
+      <h2 class="mb-6 text-center font-display text-xl font-700 text-fg">Bagaimana kempen menaikkan ranking</h2>
+      <div class="grid items-center gap-4 md:grid-cols-7">
+        {
+          [
+            { t: 'Social Performance', s: 'Base Score' },
+            { t: 'Base Score', s: '86' },
+            { t: 'Join Campaign', s: 'Wiradigital' },
+            { t: 'Campaign Performance', s: 'Score 93' },
+            { t: 'Bonus Points', s: '+6', hi: true },
+            { t: 'Final Score', s: '92', hi: true },
+            { t: 'Ranking Movement', s: '#12 → #7', hi: true },
+          ].map((step, i, arr) => (
+            <>
+              <div class:list={['rounded-xl border p-3.5 text-center', step.hi ? 'border-brand-500/30 bg-brand-500/5' : 'border-line bg-white/[0.02]']}>
+                <div class="text-[11px] leading-tight text-fg-muted">{step.t}</div>
+                <div class:list={['mt-1 font-display font-800', step.hi ? 'text-brand-300' : 'text-fg']}>{step.s}</div>
+              </div>
+              {i < arr.length - 1 && (
+                <div class="flex justify-center text-fg-subtle md:rotate-0">
+                  <svg class="h-4 w-4 rotate-90 md:rotate-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+                </div>
+              )}
+            </>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="container-wd pb-16">
+    {
+      groups.map(
+        (g) =>
+          g.items.length > 0 && (
+            <div class="mb-12">
+              <div class="mb-5 flex items-center gap-3">
+                <h2 class="font-display text-xl font-700 text-fg">{g.label}</h2>
+                <span class="chip">{g.items.length}</span>
+              </div>
+              <div class="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+                {g.items.map((c) => (
+                  <CampaignCard campaign={c} />
+                ))}
+              </div>
+            </div>
+          ),
+      )
+    }
+  </section>
+</Layout>

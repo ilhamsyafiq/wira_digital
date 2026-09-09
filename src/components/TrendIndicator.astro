@@ -1,0 +1,28 @@
+---
+import type { Trend } from '../data/types';
+export interface Props {
+  trend: Trend;
+  value: number;
+  size?: 'sm' | 'md';
+  showLabel?: boolean;
+}
+const { trend, value, size = 'sm', showLabel = false } = Astro.props;
+
+const map = {
+  up: { sym: '↑', cls: 'text-rise', label: 'Rising', prefix: '+' },
+  down: { sym: '↓', cls: 'text-fall', label: 'Falling', prefix: '-' },
+  stable: { sym: '—', cls: 'text-stable', label: 'Stable', prefix: '' },
+} as const;
+const t = map[trend];
+const text = trend === 'stable' ? '—' : `${t.sym} ${t.prefix}${Math.abs(value)}`;
+const sizeCls = size === 'md' ? 'text-sm px-2.5 py-1' : 'text-xs px-2 py-0.5';
+---
+
+<span
+  class={`inline-flex items-center gap-1 rounded-full font-semibold tabular-nums ${t.cls} ${sizeCls}`}
+  style="background: color-mix(in srgb, currentColor 12%, transparent);"
+  title={`${t.label} ${trend !== 'stable' ? Math.abs(value) : ''}`}
+>
+  {text}
+  {showLabel && trend !== 'stable' && <span class="opacity-80">Ranking</span>}
+</span>

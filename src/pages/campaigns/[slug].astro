@@ -1,0 +1,131 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import CampaignPerformance from '../../components/CampaignPerformance.astro';
+import CreatorCard from '../../components/CreatorCard.astro';
+import PlatformIcon from '../../components/PlatformIcon.astro';
+import { campaigns, getCampaign } from '../../data/campaigns';
+import { getCreator } from '../../data/creators';
+import { platformMap } from '../../data/platforms';
+import { withBase } from '../../lib/url';
+
+export function getStaticPaths() {
+  return campaigns.map((c) => ({ params: { slug: c.slug } }));
+}
+
+const { slug } = Astro.params;
+const campaign = getCampaign(slug!)!;
+const featured = campaign.featuredCreators.map((s) => getCreator(s)).filter(Boolean);
+
+const covers: Record<string, string> = {
+  sunset: 'linear-gradient(135deg,#f59e0b,#db2777)',
+  rose: 'linear-gradient(135deg,#fb7185,#be185d)',
+  ocean: 'linear-gradient(135deg,#22d3ee,#0369a1)',
+  aurora: 'linear-gradient(135deg,#34d3a1,#8b5cf6)',
+  lime: 'linear-gradient(135deg,#a3e635,#059669)',
+  violet: 'linear-gradient(135deg,#a78bfa,#6d28d9)',
+};
+const statusMap = {
+  active: { label: 'Active', cls: 'text-rise', dot: 'bg-rise' },
+  upcoming: { label: 'Upcoming', cls: 'text-gold', dot: 'bg-gold' },
+  completed: { label: 'Completed', cls: 'text-stable', dot: 'bg-stable' },
+} as const;
+const st = statusMap[campaign.status];
+const isLive = campaign.status !== 'upcoming';
+---
+
+<Layout
+  title={`${campaign.title} — Wiradigital Campaign`}
+  description={`${campaign.title} oleh ${campaign.brand}. ${campaign.description}`}
+  path={`/campaigns/${campaign.slug}`}
+>
+  <section class="container-wd pt-6 pb-16">
+    <a href={withBase('/campaigns')} class="mb-6 inline-flex items-center gap-1.5 text-sm text-fg-muted transition-colors hover:text-fg">
+      <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M11 18l-6-6 6-6"/></svg>
+      Semua kempen
+    </a>
+
+    <!-- Hero -->
+    <div class="card relative overflow-hidden" data-reveal>
+      <div class="relative h-40 sm:h-52" style={`background:${covers[campaign.cover] ?? covers.aurora}`}>
+        <div class="absolute inset-0 opacity-25 grid-overlay"></div>
+        <div class="absolute inset-0" style="background:linear-gradient(180deg,transparent,rgba(10,11,18,0.85))"></div>
+        <div class="absolute left-5 top-5 flex items-center gap-1.5 rounded-full bg-black/40 px-3 py-1.5 text-xs font-600 backdrop-blur-sm">
+          <span class={`inline-block h-1.5 w-1.5 rounded-full ${st.dot} ${campaign.status === 'active' ? 'animate-pulse' : ''}`}></span>
+          <span class={st.cls}>{st.label}</span>
+        </div>
+      </div>
+      <div class="p-6 sm:p-8">
+        <div class="flex flex-wrap items-end justify-between gap-4">
+          <div>
+            <div class="text-sm font-600 uppercase tracking-wider text-fg-subtle">{campaign.brand}</div>
+            <h1 class="mt-1 font-display text-3xl font-800 text-fg sm:text-4xl">{campaign.title}</h1>
+            <div class="mt-3 flex flex-wrap items-center gap-2">
+              <span class="chip">{campaign.category}</span>
+              <span class="text-sm text-fg-subtle">{campaign.period}</span>
+              <div class="flex items-center gap-1.5">
+                {campaign.platforms.map((p) => (
+                  <span class="grid h-6 w-6 place-items-center rounded-md bg-white/5" style={`color:${platformMap[p].color}`}>
+                    <PlatformIcon platform={p} class="h-3.5 w-3.5" />
+                  </span>
+                ))}
+              </div>
+            </div>
+          </div>
+          <div class="flex items-center gap-2 rounded-xl border border-brand-500/30 bg-brand-500/5 px-4 py-3">
+            <span class="font-display text-2xl font-800 tabular-nums text-brand-300">+{campaign.bonusPoints}</span>
+            <span class="text-xs font-600 uppercase leading-tight tracking-wider text-brand-200">Ranking<br/>Bonus</span>
+          </div>
+        </div>
+        <p class="mt-5 max-w-2xl text-fg-muted">{campaign.description}</p>
+      </div>
+    </div>
+
+    <div class="mt-6 grid gap-6 lg:grid-cols-[1.3fr_1fr]">
+      <!-- Performance -->
+      {
+        isLive ? (
+          <CampaignPerformance performance={campaign.performance} score={campaign.campaignScore} bonus={campaign.bonusPoints} />
+        ) : (
+          <div class="card flex flex-col items-center justify-center p-10 text-center" data-reveal>
+            <span class="text-3xl">🗓️</span>
+            <h3 class="mt-3 font-display text-lg font-700 text-fg">Kempen akan datang</h3>
+            <p class="mt-2 max-w-sm text-sm text-fg-muted">Prestasi kempen akan dipaparkan setelah kempen bermula pada {campaign.period}.</p>
+          </div>
+        )
+      }
+
+      <!-- Requirements -->
+      <div class="card p-6" data-reveal>
+        <h3 class="mb-4 font-display text-lg font-700 text-fg">Campaign Requirements</h3>
+        <ul class="flex flex-col gap-3">
+          {
+            campaign.requirements.map((r) => (
+              <li class="flex items-start gap-3 text-sm text-fg-muted">
+                <span class="mt-0.5 grid h-5 w-5 shrink-0 place-items-center rounded-md bg-brand-500/12 text-xs text-brand-300">✓</span>
+                {r}
+              </li>
+            ))
+          }
+        </ul>
+        {campaign.participants > 0 && (
+          <div class="mt-5 flex items-center justify-between border-t border-line pt-4 text-sm">
+            <span class="text-fg-muted">Participants</span>
+            <span class="font-700 text-fg">{campaign.participants} creators</span>
+          </div>
+        )}
+      </div>
+    </div>
+
+    <!-- Featured creators -->
+    {
+      featured.length > 0 && (
+        <div class="mt-10">
+          <h3 class="mb-5 font-display text-xl font-700 text-fg">Creator dalam kempen ini</h3>
+          <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            {featured.map((c) => <CreatorCard creator={c!} />)}
+          </div>
+        </div>
+      )
+    }
+  </section>
+</Layout>

@@ -1,0 +1,159 @@
+---
+import type { Creator } from '../data/types';
+import PlatformTabs from './PlatformTabs.astro';
+import FilterBar from './FilterBar.astro';
+import RankingRow from './RankingRow.astro';
+
+export interface Props {
+  creators: Creator[];
+  showFilters?: boolean;
+  showTabs?: boolean;
+  showHeaderRow?: boolean;
+}
+const { creators, showFilters = true, showTabs = true, showHeaderRow = true } = Astro.props;
+---
+
+<div class="ranking-explorer" data-reveal>
+  {showTabs && <PlatformTabs class="mb-4" />}
+  {showFilters && <FilterBar class="mb-5" />}
+
+  <div class="card overflow-hidden">
+    {
+      showHeaderRow && (
+        <div class="hidden grid-cols-[3.5rem_minmax(0,2.2fr)_1fr_1fr_auto_auto] items-center gap-x-3 border-b border-line bg-white/[0.02] px-4 py-3 text-[10px] font-700 uppercase tracking-[0.14em] text-fg-subtle md:grid">
+          <span>Rank</span>
+          <span>Creator</span>
+          <span>Category</span>
+          <span>State</span>
+          <span class="pl-4 text-right">Score</span>
+          <span class="text-right">Trend</span>
+        </div>
+      )
+    }
+
+    <div class="flex flex-col gap-3 p-3 md:gap-0 md:p-0" data-ranking-list>
+      {creators.map((c) => <RankingRow creator={c} />)}
+    </div>
+
+    <div class="hidden px-4 py-16 text-center text-fg-muted" data-empty>
+      <p class="font-600 text-fg">Tiada creator ditemui</p>
+      <p class="mt-1 text-sm">Cuba laraskan penapis atau platform.</p>
+    </div>
+  </div>
+
+  <p class="mt-3 text-center text-xs text-fg-subtle">
+    Menunjukkan <span data-count-visible>{creators.length}</span> creator · Demo ranking — data ilustrasi sahaja.
+  </p>
+</div>
+
+<script>
+  type ScopeMap = Record<string, number>;
+
+  document.querySelectorAll<HTMLElement>('.ranking-explorer').forEach((root) => {
+    const list = root.querySelector<HTMLElement>('[data-ranking-list]');
+    const rows = Array.from(root.querySelectorAll<HTMLElement>('[data-row]'));
+    const empty = root.querySelector<HTMLElement>('[data-empty]');
+    const visibleCount = root.querySelector<HTMLElement>('[data-count-visible]');
+
+    const search = root.querySelector<HTMLInputElement>('#filter-search');
+    const catSel = root.querySelector<HTMLSelectElement>('#filter-category');
+    const stateSel = root.querySelector<HTMLSelectElement>('#filter-state');
+    const sortSel = root.querySelector<HTMLSelectElement>('#filter-sort');
+    const tabWrap = root.querySelector<HTMLElement>('[data-tabs]');
+
+    let scope = 'all';
+
+    const medalClass = (rank: number) => {
+      if (rank === 1) return 'bg-[linear-gradient(135deg,#fde68a,#f59e0b)] text-[#3a2a00]';
+      if (rank === 2) return 'bg-[linear-gradient(135deg,#e5e7eb,#9ca3af)] text-[#20242c]';
+      if (rank === 3) return 'bg-[linear-gradient(135deg,#f6c390,#c2703a)] text-[#2a1500]';
+      return 'bg-white/5 text-fg';
+    };
+
+    const apply = () => {
+      const q = (search?.value || '').trim().toLowerCase();
+      const cat = catSel?.value || '';
+      const state = stateSel?.value || '';
+      const sort = sortSel?.value || '';
+
+      let visible = rows.filter((r) => {
+        if (scope !== 'all') {
+          const plats: string[] = JSON.parse(r.dataset.platforms || '[]');
+          if (!plats.includes(scope)) return false;
+        }
+        if (cat && r.dataset.category !== cat) return false;
+        if (state && r.dataset.state !== state) return false;
+        if (q) {
+          const hay = (r.dataset.name || '') + ' ' + (r.dataset.username || '');
+          if (!hay.includes(q)) return false;
+        }
+        return true;
+      });
+
+      const scoreOf = (r: HTMLElement): number => {
+        const scores: ScopeMap = JSON.parse(r.dataset.scores || '{}');
+        return scores[scope] ?? 0;
+      };
+
+      visible.sort((a, b) => {
+        if (sort === 'Score: Low → High') return scoreOf(a) - scoreOf(b);
+        if (sort === 'Alphabetical') return (a.dataset.name || '').localeCompare(b.dataset.name || '');
+        if (sort === 'Rising first') {
+          const rank = (r: HTMLElement) => (r.dataset.trend === 'up' ? 1 : r.dataset.trend === 'stable' ? 0 : -1);
+          const d = rank(b) - rank(a);
+          if (d !== 0) return d;
+          const tv = parseInt(b.dataset.trendvalue || '0') - parseInt(a.dataset.trendvalue || '0');
+          if (tv !== 0) return tv;
+          return scoreOf(b) - scoreOf(a);
+        }
+        return scoreOf(b) - scoreOf(a); // default High → Low
+      });
+
+      // Hide all, then re-append visible in order.
+      rows.forEach((r) => (r.style.display = 'none'));
+      visible.forEach((r, i) => {
+        r.style.display = '';
+        list?.appendChild(r);
+
+        // Update rank badge
+        const badge = r.querySelector<HTMLElement>('[data-rank]');
+        if (badge) {
+          badge.textContent = String(i + 1);
+          badge.className =
+            'rank-badge grid h-9 w-9 place-items-center rounded-xl font-display text-sm font-800 tabular-nums ' +
+            medalClass(i + 1);
+        }
+
+        // Update score + label for the current scope
+        const scoreEl = r.querySelector<HTMLElement>('[data-score]');
+        const labelEl = r.querySelector<HTMLElement>('[data-score-label]');
+        if (scoreEl) scoreEl.textContent = String(scoreOf(r));
+        if (labelEl) labelEl.textContent = scope === 'all' ? 'Wira' : scope.slice(0, 4).toUpperCase();
+      });
+
+      if (empty) empty.style.display = visible.length ? 'none' : '';
+      if (visibleCount) visibleCount.textContent = String(visible.length);
+    };
+
+    // Tab wiring
+    tabWrap?.querySelectorAll<HTMLButtonElement>('[data-tab]').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        scope = btn.dataset.tab || 'all';
+        tabWrap.querySelectorAll<HTMLButtonElement>('[data-tab]').forEach((b) => {
+          const on = b === btn;
+          b.setAttribute('aria-selected', String(on));
+          b.classList.toggle('is-active', on);
+          b.classList.toggle('bg-white/10', on);
+          b.classList.toggle('text-fg', on);
+          b.classList.toggle('text-fg-muted', !on);
+        });
+        apply();
+      });
+    });
+
+    search?.addEventListener('input', apply);
+    [catSel, stateSel, sortSel].forEach((s) => s?.addEventListener('change', apply));
+
+    apply();
+  });
+</script>

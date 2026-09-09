@@ -1,0 +1,91 @@
+---
+import Layout from '../layouts/Layout.astro';
+import SectionHeader from '../components/SectionHeader.astro';
+import CreatorCard from '../components/CreatorCard.astro';
+import { categoryNames, states } from '../data/categories';
+import { overallRanking } from '../data/creators';
+
+const creators = overallRanking();
+---
+
+<Layout
+  title="Creators — Discover Malaysia's Social Media Creators | Wiradigital"
+  description="Terokai creator media sosial Malaysia. Tapis ikut kategori, negeri & platform, dan bandingkan Wiradigital Score, engagement dan prestasi kempen."
+  path="/creators"
+>
+  <section class="container-wd pt-8 pb-16">
+    <SectionHeader
+      eyebrow="Explore Creators"
+      title="Temui creator media sosial Malaysia"
+      subtitle="Layari creator mengikut kategori, negeri dan platform. Setiap profil menunjukkan Wiradigital Score, prestasi & rekod kempen."
+      class="mb-8"
+    />
+
+    <!-- Filters -->
+    <div class="mb-6 grid grid-cols-1 gap-3 sm:grid-cols-3" data-creators-filter>
+      <label class="relative sm:col-span-1">
+        <input
+          id="c-search"
+          type="search"
+          placeholder="Cari creator…"
+          class="w-full rounded-xl border border-line bg-surface px-3.5 py-2.5 text-sm text-fg placeholder:text-fg-subtle outline-none focus:border-brand-500/60"
+        />
+      </label>
+      <div class="relative">
+        <select id="c-category" class="w-full appearance-none rounded-xl border border-line bg-surface px-3.5 py-2.5 pr-9 text-sm text-fg outline-none focus:border-brand-500/60">
+          <option value="">All categories</option>
+          {categoryNames.map((c) => <option value={c}>{c}</option>)}
+        </select>
+        <svg class="pointer-events-none absolute right-3 top-3 h-4 w-4 text-fg-subtle" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 9l6 6 6-6"/></svg>
+      </div>
+      <div class="relative">
+        <select id="c-state" class="w-full appearance-none rounded-xl border border-line bg-surface px-3.5 py-2.5 pr-9 text-sm text-fg outline-none focus:border-brand-500/60">
+          <option value="">All states</option>
+          {states.map((s) => <option value={s}>{s}</option>)}
+        </select>
+        <svg class="pointer-events-none absolute right-3 top-3 h-4 w-4 text-fg-subtle" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 9l6 6 6-6"/></svg>
+      </div>
+    </div>
+
+    <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3" data-creators-grid>
+      {
+        creators.map((c) => (
+          <div data-creator data-category={c.category} data-state={c.state} data-name={`${c.name} ${c.username}`.toLowerCase()}>
+            <CreatorCard creator={c} />
+          </div>
+        ))
+      }
+    </div>
+
+    <div class="hidden py-16 text-center text-fg-muted" data-creators-empty>
+      <p class="font-600 text-fg">Tiada creator ditemui</p>
+      <p class="mt-1 text-sm">Cuba laraskan penapis anda.</p>
+    </div>
+  </section>
+</Layout>
+
+<script>
+  const grid = document.querySelector('[data-creators-grid]');
+  const cards = Array.from(document.querySelectorAll<HTMLElement>('[data-creator]'));
+  const empty = document.querySelector<HTMLElement>('[data-creators-empty]');
+  const search = document.querySelector<HTMLInputElement>('#c-search');
+  const cat = document.querySelector<HTMLSelectElement>('#c-category');
+  const state = document.querySelector<HTMLSelectElement>('#c-state');
+
+  const apply = () => {
+    const q = (search?.value || '').trim().toLowerCase();
+    let count = 0;
+    cards.forEach((card) => {
+      const okCat = !cat?.value || card.dataset.category === cat.value;
+      const okState = !state?.value || card.dataset.state === state.value;
+      const okQ = !q || (card.dataset.name || '').includes(q);
+      const show = okCat && okState && okQ;
+      card.style.display = show ? '' : 'none';
+      if (show) count++;
+    });
+    if (empty) empty.style.display = count ? 'none' : '';
+  };
+  search?.addEventListener('input', apply);
+  cat?.addEventListener('change', apply);
+  state?.addEventListener('change', apply);
+</script>
