@@ -29,11 +29,11 @@ const parts = [
             'flex items-center justify-between rounded-xl border px-4 py-3.5',
             p.kind === 'bonus'
               ? 'border-brand-500/25 bg-brand-500/5'
-              : 'border-line bg-white/[0.02]',
+              : 'border-line bg-black/[0.025]',
           ]}
         >
           <div>
-            <div class:list={['text-sm font-600', p.kind === 'bonus' ? 'text-brand-200' : 'text-fg']}>
+            <div class:list={['text-sm font-600', p.kind === 'bonus' ? 'text-brand-700' : 'text-fg']}>
               {p.label}
             </div>
             <div class="text-xs text-fg-subtle">{p.hint}</div>
@@ -41,7 +41,7 @@ const parts = [
           <div
             class:list={[
               'font-display text-2xl font-800 tabular-nums',
-              p.kind === 'bonus' ? 'text-brand-300' : 'text-fg',
+              p.kind === 'bonus' ? 'text-brand-600' : 'text-fg',
             ]}
           >
             {p.kind === 'bonus' ? `+${p.value}` : p.value}
@@ -58,7 +58,7 @@ const parts = [
   </div>
 
   <div
-    class="flex items-center justify-between rounded-xl border border-brand-400/40 bg-[linear-gradient(120deg,rgba(47,91,255,0.16),rgba(56,164,224,0.10))] px-4 py-4"
+    class="flex items-center justify-between rounded-xl border border-brand-400/40 bg-brand-500/10 px-4 py-4"
   >
     <div>
       <div class="text-sm font-700 text-fg">Final Wiradigital Score</div>

@@ -23,7 +23,6 @@ const campaigns = activeCampaigns.slice(0, 3);
 >
   <!-- Hero -->
   <section class="relative overflow-hidden pt-8 pb-12">
-    <div class="pointer-events-none absolute inset-0 -z-10 grid-overlay opacity-40"></div>
     <div class="container-wd">
       <SectionHeader
         eyebrow="📡 DailyMedia"
@@ -32,7 +31,7 @@ const campaigns = activeCampaigns.slice(0, 3);
       />
       <div class="mt-6 flex flex-wrap gap-2">
         {['Featured', 'Trending', 'Creators', 'Campaigns', 'Stories'].map((t, i) => (
-          <span class:list={['chip', i === 0 && 'border-brand-500/25 bg-brand-500/5 text-brand-200']}>{t}</span>
+          <span class:list={['chip', i === 0 && 'border-brand-500/25 bg-brand-500/5 text-brand-700']}>{t}</span>
         ))}
       </div>
     </div>
@@ -57,7 +56,7 @@ const campaigns = activeCampaigns.slice(0, 3);
             <p class="mt-4 leading-relaxed text-fg-muted">
               Setiap kandungan pilihan boleh bermula di DailyMedia sebelum disebarkan melalui rangkaian media sosial yang lebih luas.
             </p>
-            <p class="mt-4 rounded-xl border border-line bg-white/[0.02] p-4 text-sm text-fg-muted">
+            <p class="mt-4 rounded-xl border border-line bg-black/[0.025] p-4 text-sm text-fg-muted">
               Nota penting: Bukan setiap creator diedarkan secara automatik. Hanya kandungan <span class="text-fg">terpilih / featured</span> yang disebarkan lebih luas.
             </p>
           </div>

@@ -20,7 +20,7 @@ const isActive = (href: string) => path === href || (href !== '/' && path.starts
 >
   <div class="container-wd">
     <nav
-      class="mt-3 flex items-center justify-between rounded-2xl border border-line bg-[rgba(12,14,22,0.72)] px-4 py-2.5 backdrop-blur-xl md:px-5"
+      class="mt-3 flex items-center justify-between rounded-2xl border border-line bg-[rgba(255,255,255,0.72)] px-4 py-2.5 backdrop-blur-xl md:px-5"
     >
       <Logo />
 
@@ -32,7 +32,7 @@ const isActive = (href: string) => path === href || (href !== '/' && path.starts
                 href={withBase(l.href)}
                 class:list={[
                   'rounded-lg px-3.5 py-2 text-sm font-500 transition-colors',
-                  isActive(l.href) ? 'text-fg bg-white/5' : 'text-fg-muted hover:text-fg hover:bg-white/5',
+                  isActive(l.href) ? 'text-fg bg-black/[0.045]' : 'text-fg-muted hover:text-fg hover:bg-black/[0.045]',
                 ]}
                 aria-current={isActive(l.href) ? 'page' : undefined}
               >
@@ -62,7 +62,7 @@ const isActive = (href: string) => path === href || (href !== '/' && path.starts
     <!-- Mobile menu -->
     <div
       id="mobile-menu"
-      class="mt-2 hidden overflow-hidden rounded-2xl border border-line bg-[rgba(12,14,22,0.95)] p-2 backdrop-blur-xl lg:hidden"
+      class="mt-2 hidden overflow-hidden rounded-2xl border border-line bg-[rgba(255,255,255,0.95)] p-2 backdrop-blur-xl lg:hidden"
     >
       {
         links.map((l) => (
@@ -70,7 +70,7 @@ const isActive = (href: string) => path === href || (href !== '/' && path.starts
             href={withBase(l.href)}
             class:list={[
               'block rounded-lg px-4 py-3 text-sm font-500 transition-colors',
-              isActive(l.href) ? 'text-fg bg-white/5' : 'text-fg-muted hover:text-fg hover:bg-white/5',
+              isActive(l.href) ? 'text-fg bg-black/[0.045]' : 'text-fg-muted hover:text-fg hover:bg-black/[0.045]',
             ]}
           >
             {l.label}
@@ -109,7 +109,7 @@ const isActive = (href: string) => path === href || (href !== '/' && path.starts
 
 <style>
   #site-header.is-scrolled nav {
-    box-shadow: 0 12px 40px -20px rgba(0, 0, 0, 0.9);
-    background: rgba(10, 11, 18, 0.85);
+    box-shadow: 0 12px 40px -20px rgba(15, 21, 38, 0.25);
+    background: rgba(255, 255, 255, 0.85);
   }
 </style>

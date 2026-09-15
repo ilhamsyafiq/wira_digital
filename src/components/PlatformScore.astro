@@ -16,8 +16,8 @@ const rows = platforms.filter((p) => typeof scores[p.id] === 'number');
   layout === 'grid' ? (
     <div class={`grid grid-cols-2 gap-2.5 sm:grid-cols-3 ${className}`}>
       {rows.map((p) => (
-        <div class="flex items-center gap-2.5 rounded-xl border border-line bg-white/[0.02] px-3 py-2.5">
-          <span class="grid h-8 w-8 place-items-center rounded-lg bg-white/5" style={`color:${p.color}`}>
+        <div class="flex items-center gap-2.5 rounded-xl border border-line bg-black/[0.025] px-3 py-2.5">
+          <span class="grid h-8 w-8 place-items-center rounded-lg bg-black/[0.045]" style={`color:${p.color}`}>
             <PlatformIcon platform={p.id} class="h-4 w-4" />
           </span>
           <div>
@@ -31,11 +31,11 @@ const rows = platforms.filter((p) => typeof scores[p.id] === 'number');
     <div class={`flex flex-col gap-2.5 ${className}`}>
       {rows.map((p) => (
         <div class="flex items-center gap-3">
-          <span class="grid h-7 w-7 shrink-0 place-items-center rounded-lg bg-white/5" style={`color:${p.color}`}>
+          <span class="grid h-7 w-7 shrink-0 place-items-center rounded-lg bg-black/[0.045]" style={`color:${p.color}`}>
             <PlatformIcon platform={p.id} class="h-3.5 w-3.5" />
           </span>
           <span class="w-20 shrink-0 text-sm text-fg-muted">{p.name}</span>
-          <div class="h-1.5 flex-1 overflow-hidden rounded-full bg-white/5">
+          <div class="h-1.5 flex-1 overflow-hidden rounded-full bg-black/[0.045]">
             <div
               class="h-full rounded-full"
               style={`width:0%;background:${p.color}`}

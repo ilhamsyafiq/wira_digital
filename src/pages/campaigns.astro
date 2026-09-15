@@ -41,9 +41,9 @@ const groups = [
             { t: 'Ranking Movement', s: '#12 → #7', hi: true },
           ].map((step, i, arr) => (
             <>
-              <div class:list={['rounded-xl border p-3.5 text-center', step.hi ? 'border-brand-500/30 bg-brand-500/5' : 'border-line bg-white/[0.02]']}>
+              <div class:list={['rounded-xl border p-3.5 text-center', step.hi ? 'border-brand-500/30 bg-brand-500/5' : 'border-line bg-black/[0.025]']}>
                 <div class="text-[11px] leading-tight text-fg-muted">{step.t}</div>
-                <div class:list={['mt-1 font-display font-800', step.hi ? 'text-brand-300' : 'text-fg']}>{step.s}</div>
+                <div class:list={['mt-1 font-display font-800', step.hi ? 'text-brand-600' : 'text-fg']}>{step.s}</div>
               </div>
               {i < arr.length - 1 && (
                 <div class="flex justify-center text-fg-subtle md:rotate-0">

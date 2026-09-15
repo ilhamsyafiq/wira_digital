@@ -22,19 +22,19 @@
   --color-sky-accent: #38a4e0; /* Sky Blue — Secondary */
   --color-sky-soft: #6bc0ee;
 
-  /* Surfaces — navy-tinted darks (matches Navy Blue brand cards) */
-  --color-ink: #05070f;
-  --color-base: #080c18;
-  --color-surface: #0f1526;
-  --color-surface-2: #151d33;
-  --color-surface-3: #1d2743;
-  --color-line: rgba(255, 255, 255, 0.08);
-  --color-line-strong: rgba(147, 173, 255, 0.22);
+  /* Surfaces — light theme (white base, soft blue-grey elevations) */
+  --color-ink: #eef1f7;
+  --color-base: #ffffff;
+  --color-surface: #ffffff;
+  --color-surface-2: #f4f6fb;
+  --color-surface-3: #e7ecf6;
+  --color-line: rgba(15, 21, 38, 0.10);
+  --color-line-strong: rgba(47, 91, 255, 0.30);
 
   /* Text */
-  --color-fg: #f3f6fc;
-  --color-fg-muted: #98a4c0;
-  --color-fg-subtle: #6a7492;
+  --color-fg: #0f1526;
+  --color-fg-muted: #55617d;
+  --color-fg-subtle: #8a94ad;
 
   /* Signals */
   --color-rise: #34d399;
@@ -56,7 +56,7 @@
 
 html {
   scroll-behavior: smooth;
-  color-scheme: dark;
+  color-scheme: light;
 }
 
 body {
@@ -68,17 +68,7 @@ body {
   overflow-x: hidden;
 }
 
-/* Ambient background glow — Digital Blue + Sky Blue, subtle & fixed */
-body::before {
-  content: '';
-  position: fixed;
-  inset: 0;
-  z-index: -1;
-  background:
-    radial-gradient(60rem 40rem at 80% -10%, rgba(47, 91, 255, 0.14), transparent 60%),
-    radial-gradient(50rem 40rem at 0% 10%, rgba(56, 164, 224, 0.10), transparent 55%);
-  pointer-events: none;
-}
+/* Matte white background — no ambient gradient glow */
 
 ::selection {
   background: color-mix(in srgb, var(--color-brand-500) 45%, transparent);
@@ -89,7 +79,7 @@ body::before {
 ::-webkit-scrollbar { width: 10px; height: 10px; }
 ::-webkit-scrollbar-track { background: var(--color-ink); }
 ::-webkit-scrollbar-thumb { background: var(--color-surface-3); border-radius: 99px; border: 2px solid var(--color-ink); }
-::-webkit-scrollbar-thumb:hover { background: #2a3a63; }
+::-webkit-scrollbar-thumb:hover { background: #c2ccdd; }
 
 /* ---- Reusable component classes ---- */
 @layer components {
@@ -101,7 +91,7 @@ body::before {
   }
 
   .card {
-    background: linear-gradient(180deg, var(--color-surface) 0%, var(--color-surface) 100%);
+    background: var(--color-surface);
     border: 1px solid var(--color-line);
     border-radius: var(--radius-xl);
   }
@@ -112,7 +102,7 @@ body::before {
   .card-hover:hover {
     transform: translateY(-4px);
     border-color: var(--color-line-strong);
-    box-shadow: 0 24px 50px -24px rgba(0, 0, 0, 0.75);
+    box-shadow: 0 24px 50px -24px rgba(15, 21, 38, 0.18);
   }
 
   .btn {
@@ -138,11 +128,11 @@ body::before {
   .btn-primary:hover { box-shadow: 0 14px 36px -12px rgba(47, 91, 255, 0.95); transform: translateY(-2px); }
 
   .btn-ghost {
-    background: rgba(255, 255, 255, 0.04);
+    background: rgba(15, 21, 38, 0.03);
     color: var(--color-fg);
     border: 1px solid var(--color-line);
   }
-  .btn-ghost:hover { background: rgba(255, 255, 255, 0.08); border-color: var(--color-line-strong); }
+  .btn-ghost:hover { background: rgba(15, 21, 38, 0.06); border-color: var(--color-line-strong); }
 
   .chip {
     display: inline-flex;
@@ -155,7 +145,7 @@ body::before {
     padding: 0.35rem 0.7rem;
     border-radius: 99px;
     border: 1px solid var(--color-line);
-    background: rgba(255, 255, 255, 0.03);
+    background: rgba(15, 21, 38, 0.03);
     color: var(--color-fg-muted);
   }
 
@@ -167,7 +157,7 @@ body::before {
     font-weight: 600;
     letter-spacing: 0.14em;
     text-transform: uppercase;
-    color: var(--color-brand-400);
+    color: var(--color-brand-600);
   }
 
   .divider {
@@ -187,16 +177,10 @@ body::before {
 
 @layer utilities {
   .text-gradient {
-    background: linear-gradient(120deg, #fff 18%, var(--color-sky-soft) 55%, var(--color-brand-400));
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
+    color: var(--color-brand-600);
   }
   .text-brand-gradient {
-    background: linear-gradient(120deg, var(--color-sky-accent), var(--color-brand-500));
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
+    color: var(--color-brand-600);
   }
 }
 

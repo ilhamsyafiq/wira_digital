@@ -64,7 +64,7 @@ const isLive = campaign.status !== 'upcoming';
               <span class="text-sm text-fg-subtle">{campaign.period}</span>
               <div class="flex items-center gap-1.5">
                 {campaign.platforms.map((p) => (
-                  <span class="grid h-6 w-6 place-items-center rounded-md bg-white/5" style={`color:${platformMap[p].color}`}>
+                  <span class="grid h-6 w-6 place-items-center rounded-md bg-black/[0.045]" style={`color:${platformMap[p].color}`}>
                     <PlatformIcon platform={p} class="h-3.5 w-3.5" />
                   </span>
                 ))}
@@ -72,8 +72,8 @@ const isLive = campaign.status !== 'upcoming';
             </div>
           </div>
           <div class="flex items-center gap-2 rounded-xl border border-brand-500/30 bg-brand-500/5 px-4 py-3">
-            <span class="font-display text-2xl font-800 tabular-nums text-brand-300">+{campaign.bonusPoints}</span>
-            <span class="text-xs font-600 uppercase leading-tight tracking-wider text-brand-200">Ranking<br/>Bonus</span>
+            <span class="font-display text-2xl font-800 tabular-nums text-brand-600">+{campaign.bonusPoints}</span>
+            <span class="text-xs font-600 uppercase leading-tight tracking-wider text-brand-700">Ranking<br/>Bonus</span>
           </div>
         </div>
         <p class="mt-5 max-w-2xl text-fg-muted">{campaign.description}</p>
@@ -101,7 +101,7 @@ const isLive = campaign.status !== 'upcoming';
           {
             campaign.requirements.map((r) => (
               <li class="flex items-start gap-3 text-sm text-fg-muted">
-                <span class="mt-0.5 grid h-5 w-5 shrink-0 place-items-center rounded-md bg-brand-500/12 text-xs text-brand-300">✓</span>
+                <span class="mt-0.5 grid h-5 w-5 shrink-0 place-items-center rounded-md bg-brand-500/12 text-xs text-brand-600">✓</span>
                 {r}
               </li>
             ))
