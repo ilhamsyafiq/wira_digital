@@ -20,7 +20,7 @@ const selects = [
 
 <div class={`grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4 ${className}`}>
   <label class="relative sm:col-span-2 lg:col-span-1">
-    <span class="mb-1.5 block text-xs font-600 uppercase tracking-wider text-fg-subtle">Search</span>
+    <span class="mb-1.5 block text-xs font-[600] uppercase tracking-wider text-fg-subtle">Search</span>
     <input
       id="filter-search"
       type="search"
@@ -31,7 +31,7 @@ const selects = [
   {
     selects.map((s) => (
       <label class="relative">
-        <span class="mb-1.5 block text-xs font-600 uppercase tracking-wider text-fg-subtle">{s.label}</span>
+        <span class="mb-1.5 block text-xs font-[600] uppercase tracking-wider text-fg-subtle">{s.label}</span>
         <select
           id={s.id}
           class="w-full appearance-none rounded-xl border border-line bg-surface px-3.5 py-2.5 pr-9 text-sm text-fg outline-none transition-colors focus:border-brand-500/60"

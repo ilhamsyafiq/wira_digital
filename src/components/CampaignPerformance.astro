@@ -18,7 +18,7 @@ const rows = [
 
 <div class={`card p-5 sm:p-6 ${className}`}>
   <div class="mb-4 flex items-center justify-between">
-    <h3 class="font-display text-lg font-700 text-fg">Campaign Performance</h3>
+    <h3 class="font-display text-lg font-[700] text-fg">Campaign Performance</h3>
     <span class="chip border-brand-500/25 bg-brand-500/5 text-brand-700">Demo</span>
   </div>
 
@@ -28,7 +28,7 @@ const rows = [
         <div class="rounded-xl border border-line bg-black/[0.025] p-3.5">
           <div class="text-xs text-fg-muted">{r.label}</div>
           <div class="mt-1 flex items-end gap-1">
-            <span class="font-display text-2xl font-800 tabular-nums text-fg">{r.value}</span>
+            <span class="font-display text-2xl font-[800] tabular-nums text-fg">{r.value}</span>
             <span class="mb-1 text-xs text-fg-subtle">/100</span>
           </div>
           <div class="mt-2 h-1.5 overflow-hidden rounded-full bg-black/[0.045]">
@@ -42,11 +42,11 @@ const rows = [
   <div class="mt-4 grid grid-cols-2 gap-3">
     <div class="flex items-center justify-between rounded-xl border border-line bg-black/[0.025] px-4 py-3">
       <span class="text-sm text-fg-muted">Campaign Score</span>
-      <span class="font-display text-xl font-800 tabular-nums text-fg">{score}</span>
+      <span class="font-display text-xl font-[800] tabular-nums text-fg">{score}</span>
     </div>
     <div class="flex items-center justify-between rounded-xl border border-brand-500/25 bg-brand-500/5 px-4 py-3">
       <span class="text-sm text-brand-700">Ranking Bonus</span>
-      <span class="font-display text-xl font-800 tabular-nums text-brand-600">+{bonus}</span>
+      <span class="font-display text-xl font-[800] tabular-nums text-brand-600">+{bonus}</span>
     </div>
   </div>
 </div>

@@ -45,7 +45,7 @@ const relatedCampaigns = campaigns.filter((c) => c.featuredCreators.includes(cre
           <Avatar initials={creator.avatar} seed={creator.slug} size={88} />
           <div>
             <div class="flex items-center gap-2">
-              <h1 class="font-display text-2xl font-800 text-fg sm:text-3xl">{creator.name}</h1>
+              <h1 class="font-display text-2xl font-[800] text-fg sm:text-3xl">{creator.name}</h1>
               {creator.verified && (
                 <svg class="h-6 w-6 text-brand-500" viewBox="0 0 24 24" fill="currentColor" aria-label="Verified"><path d="M12 1.5l2.4 1.9 3-.3 1.2 2.8 2.7 1.4-.6 3 .6 3-2.7 1.4-1.2 2.8-3-.3L12 22.5l-2.4-1.9-3 .3-1.2-2.8-2.7-1.4.6-3-.6-3 2.7-1.4L6.6 3.1l3 .3L12 1.5Zm-1.1 13.2l5-5-1.3-1.3-3.7 3.7-1.8-1.8-1.3 1.3 3.1 3.1Z"/></svg>
               )}
@@ -60,7 +60,7 @@ const relatedCampaigns = campaigns.filter((c) => c.featuredCreators.includes(cre
         </div>
         <div class="flex items-center gap-6">
           <div class="text-center">
-            <div class="font-display text-3xl font-800 tabular-nums text-fg">#{creator.rank}</div>
+            <div class="font-display text-3xl font-[800] tabular-nums text-fg">#{creator.rank}</div>
             <div class="text-[10px] uppercase tracking-wider text-fg-subtle">Overall</div>
           </div>
           <div class="text-center">
@@ -78,7 +78,7 @@ const relatedCampaigns = campaigns.filter((c) => c.featuredCreators.includes(cre
         <ScoreRing score={creator.score} size={172} label="Wira Score" />
         <div class="chip border-brand-500/25 bg-brand-500/5 text-brand-700">Top {topPct}% Malaysia · Example</div>
         <div class="w-full border-t border-line pt-5 text-left">
-          <h3 class="mb-3 text-sm font-700 uppercase tracking-wider text-fg-subtle">Performance</h3>
+          <h3 class="mb-3 text-sm font-[700] uppercase tracking-wider text-fg-subtle">Performance</h3>
           <ScoreBreakdown performance={creator.performance} />
         </div>
       </div>
@@ -86,20 +86,20 @@ const relatedCampaigns = campaigns.filter((c) => c.featuredCreators.includes(cre
       <div class="flex flex-col gap-6">
         <!-- Platform scores -->
         <div class="card p-6" data-reveal>
-          <h3 class="mb-4 text-sm font-700 uppercase tracking-wider text-fg-subtle">Platform Scores</h3>
+          <h3 class="mb-4 text-sm font-[700] uppercase tracking-wider text-fg-subtle">Platform Scores</h3>
           <PlatformScore scores={creator.platforms} layout="list" />
         </div>
 
         <!-- Overall vs platform ranking -->
         <div class="card p-6" data-reveal>
-          <h3 class="mb-4 text-sm font-700 uppercase tracking-wider text-fg-subtle">Overall vs Platform Ranking</h3>
+          <h3 class="mb-4 text-sm font-[700] uppercase tracking-wider text-fg-subtle">Overall vs Platform Ranking</h3>
           <div class="grid grid-cols-2 gap-3 sm:grid-cols-3">
             {
               snapshot.map((s) => (
                 <div class:list={['rounded-xl border p-3.5', s.scope === 'all' ? 'border-brand-500/30 bg-brand-500/5' : 'border-line bg-black/[0.025]']}>
-                  <div class="text-[11px] font-600 uppercase tracking-wider text-fg-subtle">{s.scope === 'all' ? 'Overall' : platformMap[s.scope as keyof typeof platformMap]?.name}</div>
+                  <div class="text-[11px] font-[600] uppercase tracking-wider text-fg-subtle">{s.scope === 'all' ? 'Overall' : platformMap[s.scope as keyof typeof platformMap]?.name}</div>
                   <div class="mt-1 flex items-baseline gap-2">
-                    <span class="font-display text-xl font-800 tabular-nums text-fg">#{s.rank}</span>
+                    <span class="font-display text-xl font-[800] tabular-nums text-fg">#{s.rank}</span>
                     <span class="text-sm tabular-nums text-fg-muted">{s.score}</span>
                   </div>
                 </div>
@@ -113,29 +113,29 @@ const relatedCampaigns = campaigns.filter((c) => c.featuredCreators.includes(cre
     <!-- Score composition -->
     <div class="mt-6 grid gap-6 lg:grid-cols-2">
       <div data-reveal>
-        <h3 class="mb-3 font-display text-lg font-700 text-fg">Bagaimana skor ini dibina</h3>
+        <h3 class="mb-3 font-display text-lg font-[700] text-fg">Bagaimana skor ini dibina</h3>
         <CampaignBonus base={creator.baseScore} campaignBonus={creator.campaignBonus} dailyMediaBonus={creator.dailyMediaBonus} />
       </div>
 
       <!-- Campaign record + DailyMedia -->
       <div class="flex flex-col gap-6">
         <div class="card p-6" data-reveal>
-          <h3 class="mb-4 font-display text-lg font-700 text-fg">Campaign Record</h3>
+          <h3 class="mb-4 font-display text-lg font-[700] text-fg">Campaign Record</h3>
           <div class="grid grid-cols-2 gap-3">
             <div class="rounded-xl border border-line bg-black/[0.025] p-4">
-              <div class="font-display text-2xl font-800 tabular-nums text-fg">{creator.campaignsCompleted}</div>
+              <div class="font-display text-2xl font-[800] tabular-nums text-fg">{creator.campaignsCompleted}</div>
               <div class="text-xs text-fg-subtle">Campaigns Completed</div>
             </div>
             <div class="rounded-xl border border-line bg-black/[0.025] p-4">
-              <div class="font-display text-2xl font-800 tabular-nums text-fg">{creator.avgCampaignScore}</div>
+              <div class="font-display text-2xl font-[800] tabular-nums text-fg">{creator.avgCampaignScore}</div>
               <div class="text-xs text-fg-subtle">Avg Campaign Score</div>
             </div>
             <div class="rounded-xl border border-brand-500/25 bg-brand-500/5 p-4">
-              <div class="font-display text-2xl font-800 tabular-nums text-brand-600">+{creator.campaignBonus}</div>
+              <div class="font-display text-2xl font-[800] tabular-nums text-brand-600">+{creator.campaignBonus}</div>
               <div class="text-xs text-brand-700/80">Campaign Bonus Earned</div>
             </div>
             <div class="rounded-xl border border-line bg-black/[0.025] p-4">
-              <div class="font-display text-2xl font-800 tabular-nums text-fg">{creator.trend === 'up' ? '↑' : creator.trend === 'down' ? '↓' : '—'} {creator.trend !== 'stable' ? creator.trendValue : ''}</div>
+              <div class="font-display text-2xl font-[800] tabular-nums text-fg">{creator.trend === 'up' ? '↑' : creator.trend === 'down' ? '↓' : '—'} {creator.trend !== 'stable' ? creator.trendValue : ''}</div>
               <div class="text-xs text-fg-subtle">Ranking Movement</div>
             </div>
           </div>
@@ -150,11 +150,11 @@ const relatedCampaigns = campaigns.filter((c) => c.featuredCreators.includes(cre
               </div>
               <div class="mt-4 grid grid-cols-2 gap-3">
                 <div class="rounded-xl border border-line bg-black/[0.025] p-4">
-                  <div class="font-display text-2xl font-800 tabular-nums text-fg">{creator.dailyMedia.features}</div>
+                  <div class="font-display text-2xl font-[800] tabular-nums text-fg">{creator.dailyMedia.features}</div>
                   <div class="text-xs text-fg-subtle">Number of features</div>
                 </div>
                 <div class="rounded-xl border border-line bg-black/[0.025] p-4">
-                  <div class="font-display text-lg font-800 text-fg">{creator.dailyMedia.lastFeatured}</div>
+                  <div class="font-display text-lg font-[800] text-fg">{creator.dailyMedia.lastFeatured}</div>
                   <div class="text-xs text-fg-subtle">Last featured</div>
                 </div>
               </div>
@@ -167,7 +167,7 @@ const relatedCampaigns = campaigns.filter((c) => c.featuredCreators.includes(cre
 
     <!-- Achievements -->
     <div class="mt-6 card p-6" data-reveal>
-      <h3 class="mb-4 font-display text-lg font-700 text-fg">Achievements</h3>
+      <h3 class="mb-4 font-display text-lg font-[700] text-fg">Achievements</h3>
       <div class="flex flex-wrap gap-2.5">
         {creator.achievements.map((a) => <AchievementBadge label={a} />)}
       </div>
@@ -177,7 +177,7 @@ const relatedCampaigns = campaigns.filter((c) => c.featuredCreators.includes(cre
     {
       relatedCampaigns.length > 0 && (
         <div class="mt-10">
-          <h3 class="mb-5 font-display text-xl font-700 text-fg">Kempen disertai</h3>
+          <h3 class="mb-5 font-display text-xl font-[700] text-fg">Kempen disertai</h3>
           <div class="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
             {relatedCampaigns.map((c) => <CampaignCard campaign={c} />)}
           </div>

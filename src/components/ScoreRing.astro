@@ -40,12 +40,12 @@ const uid = 'ring-' + Math.random().toString(36).slice(2, 9);
   </svg>
   <div class="absolute inset-0 grid place-content-center text-center">
     <span
-      class="font-display font-800 leading-none tabular-nums"
+      class="font-display font-[800] leading-none tabular-nums"
       style={`font-size:${Math.round(size * 0.26)}px`}
       data-count={score}
       >{animate ? 0 : score}</span
     >
-    <span class="mt-1 text-[10px] font-600 uppercase tracking-[0.18em] text-fg-subtle">{label}</span>
+    <span class="mt-1 text-[10px] font-[600] uppercase tracking-[0.18em] text-fg-subtle">{label}</span>
   </div>
 </div>
 

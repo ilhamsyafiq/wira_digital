@@ -38,7 +38,7 @@ const top = platformMap[creator.topPlatform];
     <Avatar initials={creator.avatar} seed={creator.slug} size={featured ? 72 : 56} />
     <div class="min-w-0">
       <div class="flex items-center gap-1.5">
-        <span class="truncate font-display text-lg font-700 text-fg">{creator.name}</span>
+        <span class="truncate font-display text-lg font-[700] text-fg">{creator.name}</span>
         {
           creator.verified && (
             <svg class="h-4 w-4 shrink-0 text-brand-500" viewBox="0 0 24 24" fill="currentColor" aria-label="Verified">
@@ -53,11 +53,11 @@ const top = platformMap[creator.topPlatform];
 
   <div class:list={['mt-5 grid grid-cols-3 gap-3 md:flex-1', featured && 'md:mt-0']}>
     <div class="rounded-xl border border-line bg-black/[0.025] p-3 text-center">
-      <div class="font-display text-2xl font-800 tabular-nums text-fg">{creator.score}</div>
+      <div class="font-display text-2xl font-[800] tabular-nums text-fg">{creator.score}</div>
       <div class="text-[10px] uppercase tracking-wider text-fg-subtle">Wira Score</div>
     </div>
     <div class="rounded-xl border border-line bg-black/[0.025] p-3 text-center">
-      <div class="flex items-center justify-center gap-1 font-display text-2xl font-800 tabular-nums text-fg" style={`color:${top.color}`}>
+      <div class="flex items-center justify-center gap-1 font-display text-2xl font-[800] tabular-nums text-fg" style={`color:${top.color}`}>
         <PlatformIcon platform={creator.topPlatform} class="h-4 w-4" />
         {creator.platforms[creator.topPlatform]}
       </div>

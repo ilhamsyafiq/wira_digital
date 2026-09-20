@@ -32,14 +32,14 @@ const { steps, fanOut = false, class: className = '' } = Astro.props;
         >
           <span
             class:list={[
-              'grid h-9 w-9 shrink-0 place-items-center rounded-xl font-display text-sm font-800 tabular-nums',
+              'grid h-9 w-9 shrink-0 place-items-center rounded-xl font-display text-sm font-[800] tabular-nums',
               s.highlight ? 'bg-brand-500/15 text-brand-700' : 'bg-black/[0.045] text-fg-muted',
             ]}
           >
             {String(i + 1).padStart(2, '0')}
           </span>
           <div>
-            <div class:list={['font-600', s.highlight ? 'text-brand-700' : 'text-fg']}>{s.label}</div>
+            <div class:list={['font-[600]', s.highlight ? 'text-brand-700' : 'text-fg']}>{s.label}</div>
             {s.desc && <div class="text-xs text-fg-muted">{s.desc}</div>}
           </div>
         </div>
@@ -59,7 +59,7 @@ const { steps, fanOut = false, class: className = '' } = Astro.props;
       <div class="flex flex-wrap justify-center gap-2.5" data-reveal>
         {platforms.map((p) => (
           <span
-            class="flex items-center gap-2 rounded-xl border border-line bg-surface/70 px-3.5 py-2.5 text-sm font-500 text-fg"
+            class="flex items-center gap-2 rounded-xl border border-line bg-surface/70 px-3.5 py-2.5 text-sm font-[500] text-fg"
             style={`box-shadow: inset 0 0 0 1px transparent`}
           >
             <span class="grid h-6 w-6 place-items-center rounded-lg bg-black/[0.045]" style={`color:${p.color}`}>

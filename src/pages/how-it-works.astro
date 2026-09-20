@@ -50,8 +50,8 @@ const ecosystem = [
       {
         steps.map((s, i) => (
           <div class="card card-hover flex flex-col p-5" data-reveal style={`transition-delay:${i * 60}ms`}>
-            <span class="font-display text-3xl font-800 text-brand-500/40">{s.n}</span>
-            <h3 class="mt-3 font-display text-lg font-700 text-fg">{s.title}</h3>
+            <span class="font-display text-3xl font-[800] text-brand-500/40">{s.n}</span>
+            <h3 class="mt-3 font-display text-lg font-[700] text-fg">{s.title}</h3>
             <p class="mt-2 text-sm leading-relaxed text-fg-muted">{s.desc}</p>
           </div>
         ))
@@ -80,8 +80,8 @@ const ecosystem = [
           scoreModel.map((m) => (
             <div class="card card-hover p-5">
               <div class="flex items-baseline justify-between">
-                <h3 class="font-600 text-fg">{m.label}</h3>
-                <span class="font-display text-2xl font-800 tabular-nums text-brand-600">{m.weight}%</span>
+                <h3 class="font-[600] text-fg">{m.label}</h3>
+                <span class="font-display text-2xl font-[800] tabular-nums text-brand-600">{m.weight}%</span>
               </div>
               <div class="mt-2 h-1.5 overflow-hidden rounded-full bg-black/[0.045]">
                 <div class="h-full rounded-full bg-[linear-gradient(90deg,#2f5bff,#38a4e0)]" style="width:0%" data-bar={m.weight * 3.33} />
@@ -140,7 +140,7 @@ const ecosystem = [
       <div id="creators" class="card relative overflow-hidden p-8 scroll-mt-24" data-reveal>
         <div class="pointer-events-none absolute -right-20 -top-20 h-48 w-48 rounded-full bg-brand-500/10 blur-3xl"></div>
         <span class="eyebrow">For Creators</span>
-        <h3 class="mt-3 font-display text-2xl font-800 text-fg">Build your presence. Improve your score. Get discovered.</h3>
+        <h3 class="mt-3 font-display text-2xl font-[800] text-fg">Build your presence. Improve your score. Get discovered.</h3>
         <ol class="mt-6 space-y-2.5">
           {
             [
@@ -154,7 +154,7 @@ const ecosystem = [
               'Jangkau audiens lebih luas',
             ].map((t, i) => (
               <li class="flex items-center gap-3 text-sm text-fg-muted">
-                <span class="grid h-6 w-6 shrink-0 place-items-center rounded-md bg-brand-500/12 font-display text-xs font-700 text-brand-600">{String(i + 1).padStart(2, '0')}</span>
+                <span class="grid h-6 w-6 shrink-0 place-items-center rounded-md bg-brand-500/12 font-display text-xs font-[700] text-brand-600">{String(i + 1).padStart(2, '0')}</span>
                 {t}
               </li>
             ))
@@ -166,7 +166,7 @@ const ecosystem = [
       <div id="brands" class="card relative overflow-hidden p-8 scroll-mt-24" data-reveal>
         <div class="pointer-events-none absolute -right-20 -top-20 h-48 w-48 rounded-full bg-sky-accent/10 blur-3xl"></div>
         <span class="eyebrow" style="color:var(--color-sky-soft)">For Brands</span>
-        <h3 class="mt-3 font-display text-2xl font-800 text-fg">Find creators worth watching.</h3>
+        <h3 class="mt-3 font-display text-2xl font-[800] text-fg">Find creators worth watching.</h3>
         <p class="mt-4 text-sm leading-relaxed text-fg-muted">Temui creator berdasarkan data sebenar:</p>
         <div class="mt-5 flex flex-wrap gap-2">
           {

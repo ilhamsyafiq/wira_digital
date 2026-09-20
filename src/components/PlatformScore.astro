@@ -22,7 +22,7 @@ const rows = platforms.filter((p) => typeof scores[p.id] === 'number');
           </span>
           <div>
             <div class="text-[11px] text-fg-subtle">{p.name}</div>
-            <div class="font-display text-base font-700 tabular-nums text-fg">{scores[p.id]}</div>
+            <div class="font-display text-base font-[700] tabular-nums text-fg">{scores[p.id]}</div>
           </div>
         </div>
       ))}
@@ -42,7 +42,7 @@ const rows = platforms.filter((p) => typeof scores[p.id] === 'number');
               data-bar={scores[p.id]}
             />
           </div>
-          <span class="w-8 shrink-0 text-right font-700 tabular-nums text-fg">{scores[p.id]}</span>
+          <span class="w-8 shrink-0 text-right font-[700] tabular-nums text-fg">{scores[p.id]}</span>
         </div>
       ))}
     </div>

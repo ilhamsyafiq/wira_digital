@@ -33,14 +33,14 @@ const parts = [
           ]}
         >
           <div>
-            <div class:list={['text-sm font-600', p.kind === 'bonus' ? 'text-brand-700' : 'text-fg']}>
+            <div class:list={['text-sm font-[600]', p.kind === 'bonus' ? 'text-brand-700' : 'text-fg']}>
               {p.label}
             </div>
             <div class="text-xs text-fg-subtle">{p.hint}</div>
           </div>
           <div
             class:list={[
-              'font-display text-2xl font-800 tabular-nums',
+              'font-display text-2xl font-[800] tabular-nums',
               p.kind === 'bonus' ? 'text-brand-600' : 'text-fg',
             ]}
           >
@@ -53,7 +53,7 @@ const parts = [
 
   <div class="my-4 flex items-center gap-3 text-fg-subtle">
     <div class="h-px flex-1 bg-line"></div>
-    <span class="text-xs font-600 uppercase tracking-[0.14em]">=</span>
+    <span class="text-xs font-[600] uppercase tracking-[0.14em]">=</span>
     <div class="h-px flex-1 bg-line"></div>
   </div>
 
@@ -61,10 +61,10 @@ const parts = [
     class="flex items-center justify-between rounded-xl border border-brand-400/40 bg-brand-500/10 px-4 py-4"
   >
     <div>
-      <div class="text-sm font-700 text-fg">Final Wiradigital Score</div>
+      <div class="text-sm font-[700] text-fg">Final Wiradigital Score</div>
       <div class="text-xs text-fg-muted">Base + Campaign + DailyMedia</div>
     </div>
-    <div class="font-display text-4xl font-800 tabular-nums text-gradient">
+    <div class="font-display text-4xl font-[800] tabular-nums text-gradient">
       <span data-count={final}>0</span>
     </div>
   </div>

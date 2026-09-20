@@ -28,7 +28,7 @@ const groups = [
   <!-- Campaign → ranking flow -->
   <section class="container-wd pb-14">
     <div class="card p-6 sm:p-8" data-reveal>
-      <h2 class="mb-6 text-center font-display text-xl font-700 text-fg">Bagaimana kempen menaikkan ranking</h2>
+      <h2 class="mb-6 text-center font-display text-xl font-[700] text-fg">Bagaimana kempen menaikkan ranking</h2>
       <div class="grid items-center gap-4 md:grid-cols-7">
         {
           [
@@ -43,7 +43,7 @@ const groups = [
             <>
               <div class:list={['rounded-xl border p-3.5 text-center', step.hi ? 'border-brand-500/30 bg-brand-500/5' : 'border-line bg-black/[0.025]']}>
                 <div class="text-[11px] leading-tight text-fg-muted">{step.t}</div>
-                <div class:list={['mt-1 font-display font-800', step.hi ? 'text-brand-600' : 'text-fg']}>{step.s}</div>
+                <div class:list={['mt-1 font-display font-[800]', step.hi ? 'text-brand-600' : 'text-fg']}>{step.s}</div>
               </div>
               {i < arr.length - 1 && (
                 <div class="flex justify-center text-fg-subtle md:rotate-0">
@@ -64,7 +64,7 @@ const groups = [
           g.items.length > 0 && (
             <div class="mb-12">
               <div class="mb-5 flex items-center gap-3">
-                <h2 class="font-display text-xl font-700 text-fg">{g.label}</h2>
+                <h2 class="font-display text-xl font-[700] text-fg">{g.label}</h2>
                 <span class="chip">{g.items.length}</span>
               </div>
               <div class="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">

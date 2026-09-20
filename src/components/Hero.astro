@@ -23,7 +23,7 @@ const { creator } = Astro.props;
       </span>
 
       <h1
-        class="mt-5 font-display text-4xl font-800 leading-[1.05] tracking-tight sm:text-5xl lg:text-6xl"
+        class="mt-5 font-display text-4xl font-[800] leading-[1.05] tracking-tight sm:text-5xl lg:text-6xl"
         data-reveal
       >
         Siapa <span class="text-gradient">Creator</span> Paling Berpengaruh Malaysia?
@@ -44,7 +44,7 @@ const { creator } = Astro.props;
 
       <!-- platform strip -->
       <div class="mt-10 flex items-center gap-4" data-reveal style="transition-delay:220ms">
-        <span class="text-xs font-600 uppercase tracking-[0.14em] text-fg-subtle">Ranking merentas</span>
+        <span class="text-xs font-[600] uppercase tracking-[0.14em] text-fg-subtle">Ranking merentas</span>
         <div class="flex items-center gap-2.5">
           {
             platforms.map((p) => (
@@ -67,12 +67,12 @@ const { creator } = Astro.props;
 
         <div class="mt-5 flex items-center gap-5">
           <div class="relative grid place-items-center">
-            <div class="font-display text-6xl font-800 leading-none tabular-nums text-gradient">
+            <div class="font-display text-6xl font-[800] leading-none tabular-nums text-gradient">
               <span data-count={creator.score}>0</span>
             </div>
           </div>
           <div class="pb-1">
-            <div class="text-2xl font-800 text-fg-subtle">/100</div>
+            <div class="text-2xl font-[800] text-fg-subtle">/100</div>
           </div>
         </div>
 
@@ -80,7 +80,7 @@ const { creator } = Astro.props;
           <Avatar initials={creator.avatar} seed={creator.slug} size={44} />
           <div>
             <div class="flex items-center gap-1.5">
-              <span class="font-600 text-fg">{creator.username}</span>
+              <span class="font-[600] text-fg">{creator.username}</span>
               <svg class="h-4 w-4 text-brand-500" viewBox="0 0 24 24" fill="currentColor"><path d="M12 1.5l2.4 1.9 3-.3 1.2 2.8 2.7 1.4-.6 3 .6 3-2.7 1.4-1.2 2.8-3-.3L12 22.5l-2.4-1.9-3 .3-1.2-2.8-2.7-1.4.6-3-.6-3 2.7-1.4L6.6 3.1l3 .3L12 1.5Zm-1.1 13.2l5-5-1.3-1.3-3.7 3.7-1.8-1.8-1.3 1.3 3.1 3.1Z"/></svg>
             </div>
             <div class="text-sm text-fg-muted">{creator.category} Creator · {creator.location}</div>
@@ -96,7 +96,7 @@ const { creator } = Astro.props;
                     <span style={`color:${p.color}`}><PlatformIcon platform={p.id} class="h-3.5 w-3.5" /></span>
                     {p.name}
                   </span>
-                  <span class="font-700 tabular-nums text-fg">{creator.platforms[p.id]}</span>
+                  <span class="font-[700] tabular-nums text-fg">{creator.platforms[p.id]}</span>
                 </div>
               )
             ))
@@ -104,8 +104,8 @@ const { creator } = Astro.props;
         </div>
 
         <div class="mt-5 flex items-center justify-between rounded-xl border border-brand-400/30 bg-brand-500/10 px-4 py-3">
-          <span class="text-sm font-600 text-fg">#{creator.rank} {creator.category}</span>
-          <span class="inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-sm font-700 text-rise" style="background:color-mix(in srgb, var(--color-rise) 12%, transparent)">
+          <span class="text-sm font-[600] text-fg">#{creator.rank} {creator.category}</span>
+          <span class="inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-sm font-[700] text-rise" style="background:color-mix(in srgb, var(--color-rise) 12%, transparent)">
             ↑ +{creator.trendValue} Ranking
           </span>
         </div>
@@ -114,7 +114,7 @@ const { creator } = Astro.props;
       <!-- floating mini badge -->
       <div class="animate-float absolute -left-4 -bottom-4 hidden rounded-2xl border border-line bg-surface-2/90 px-4 py-3 backdrop-blur sm:block">
         <div class="text-[10px] uppercase tracking-wider text-fg-subtle">Campaign Bonus</div>
-        <div class="font-display text-lg font-800 text-brand-600">+{creator.campaignBonus} pts</div>
+        <div class="font-display text-lg font-[800] text-brand-600">+{creator.campaignBonus} pts</div>
       </div>
     </div>
   </div>

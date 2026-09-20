@@ -36,7 +36,7 @@ const top = platformMap[creator.topPlatform];
   <!-- Rank -->
   <div class="flex items-center">
     <span
-      class="rank-badge grid h-9 w-9 place-items-center rounded-xl font-display text-sm font-800 tabular-nums text-fg"
+      class="rank-badge grid h-9 w-9 place-items-center rounded-xl font-display text-sm font-[800] tabular-nums text-fg"
       data-rank
     >
       {creator.rank}
@@ -48,7 +48,7 @@ const top = platformMap[creator.topPlatform];
     <Avatar initials={creator.avatar} seed={creator.slug} size={40} />
     <div class="min-w-0">
       <div class="flex items-center gap-1.5">
-        <span class="truncate font-600 text-fg">{creator.name}</span>
+        <span class="truncate font-[600] text-fg">{creator.name}</span>
         {
           creator.verified && (
             <svg class="h-3.5 w-3.5 shrink-0 text-brand-500" viewBox="0 0 24 24" fill="currentColor" aria-label="Verified">
@@ -71,8 +71,8 @@ const top = platformMap[creator.topPlatform];
 
   <!-- Score -->
   <div class="text-right md:pl-4">
-    <div class="font-display text-xl font-800 tabular-nums text-fg" data-score>{creator.score}</div>
-    <div class="text-[9px] font-600 uppercase tracking-[0.14em] text-fg-subtle" data-score-label>Wira</div>
+    <div class="font-display text-xl font-[800] tabular-nums text-fg" data-score>{creator.score}</div>
+    <div class="text-[9px] font-[600] uppercase tracking-[0.14em] text-fg-subtle" data-score-label>Wira</div>
   </div>
 
   <!-- Mobile meta (category + location) -->

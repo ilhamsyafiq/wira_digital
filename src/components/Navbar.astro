@@ -31,7 +31,7 @@ const isActive = (href: string) => path === href || (href !== '/' && path.starts
               <a
                 href={withBase(l.href)}
                 class:list={[
-                  'rounded-lg px-3.5 py-2 text-sm font-500 transition-colors',
+                  'rounded-lg px-3.5 py-2 text-sm font-[500] transition-colors',
                   isActive(l.href) ? 'text-fg bg-black/[0.045]' : 'text-fg-muted hover:text-fg hover:bg-black/[0.045]',
                 ]}
                 aria-current={isActive(l.href) ? 'page' : undefined}
@@ -69,7 +69,7 @@ const isActive = (href: string) => path === href || (href !== '/' && path.starts
           <a
             href={withBase(l.href)}
             class:list={[
-              'block rounded-lg px-4 py-3 text-sm font-500 transition-colors',
+              'block rounded-lg px-4 py-3 text-sm font-[500] transition-colors',
               isActive(l.href) ? 'text-fg bg-black/[0.045]' : 'text-fg-muted hover:text-fg hover:bg-black/[0.045]',
             ]}
           >

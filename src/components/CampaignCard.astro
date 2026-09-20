@@ -30,7 +30,7 @@ const st = statusMap[campaign.status];
   <div class="relative h-28 overflow-hidden" style={`background:${covers[campaign.cover] ?? covers.aurora}`}>
     <div class="absolute inset-0 opacity-25 grid-overlay"></div>
     <div class="absolute inset-0" style="background:linear-gradient(180deg,transparent,rgba(10,11,18,0.7))"></div>
-    <div class="absolute left-4 top-4 flex items-center gap-1.5 rounded-full bg-black/40 px-2.5 py-1 text-xs font-600 backdrop-blur-sm">
+    <div class="absolute left-4 top-4 flex items-center gap-1.5 rounded-full bg-black/40 px-2.5 py-1 text-xs font-[600] backdrop-blur-sm">
       <span class={`inline-block h-1.5 w-1.5 rounded-full ${st.dot} ${campaign.status === 'active' ? 'animate-pulse' : ''}`}></span>
       <span class={st.cls}>{st.label}</span>
     </div>
@@ -46,8 +46,8 @@ const st = statusMap[campaign.status];
   </div>
 
   <div class="flex flex-1 flex-col p-5">
-    <div class="text-xs font-600 uppercase tracking-wider text-fg-subtle">{campaign.brand}</div>
-    <h3 class="mt-1 font-display text-lg font-700 leading-tight text-fg group-hover:text-brand-700">
+    <div class="text-xs font-[600] uppercase tracking-wider text-fg-subtle">{campaign.brand}</div>
+    <h3 class="mt-1 font-display text-lg font-[700] leading-tight text-fg group-hover:text-brand-700">
       {campaign.title}
     </h3>
     <p class="mt-2 line-clamp-2 text-sm leading-relaxed text-fg-muted">{campaign.description}</p>
@@ -58,8 +58,8 @@ const st = statusMap[campaign.status];
         {campaign.participants > 0 && <span class="text-xs text-fg-subtle">{campaign.participants} creators</span>}
       </div>
       <div class="flex items-center gap-1.5 rounded-lg border border-brand-500/25 bg-brand-500/5 px-2.5 py-1">
-        <span class="font-display text-sm font-800 tabular-nums text-brand-600">+{campaign.bonusPoints}</span>
-        <span class="text-[10px] font-600 uppercase tracking-wider text-brand-700">Bonus</span>
+        <span class="font-display text-sm font-[800] tabular-nums text-brand-600">+{campaign.bonusPoints}</span>
+        <span class="text-[10px] font-[600] uppercase tracking-wider text-brand-700">Bonus</span>
       </div>
     </div>
   </div>
